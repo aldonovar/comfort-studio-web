@@ -3,94 +3,97 @@
 @tailwind utilities;
 
 :root {
-  /* --- NUEVA IDENTIDAD --- */
-  --color-bg: #faf8f1;       /* COLOR BASE (Crema) */
-  --color-text: #2c2c2c;     /* Gris oscuro para lectura (mejor que negro puro) */
-  --color-accent: #b07357;   /* COLOR PRINCIPAL (Terracota) */
-  --color-accent-hover: #9a634a; /* Un poco más oscuro para hovers */
+  /* --- NUEVA IDENTIDAD COMFORT STUDIO --- */
+  --color-bg: #faf8f1;       /* COLOR BASE (Crema Arena) */
+  --color-text: #2c2c2c;     /* Gris oscuro para lectura (Elegante) */
+  --color-accent: #b07357;   /* COLOR PRINCIPAL (Terracota Branding) */
+  --color-accent-hover: #965d44; /* Oscurecido para interacciones */
   --color-white: #ffffff;
   
-  --font-main: var(--font-montserrat);
+  /* Variables de espaciado seguro */
+  --nav-height: 90px;
+  --page-padding: 5%;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background-color: var(--color-bg);
   color: var(--color-text);
-  font-family: var(--font-main), sans-serif;
+  /* La fuente se inyectará desde layout.tsx */
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased; /* Texto más nítido en Mac/iOS */
 }
 
-/* --- UTILIDADES DE TEXTO --- */
-h1, h2, h3, h4 {
+/* --- TIPOGRAFÍA --- */
+h1, h2, h3, h4, .brand-font {
   color: var(--color-accent);
-  font-weight: 700; /* Montserrat Bold */
-  letter-spacing: -0.5px;
+  font-weight: 700; 
+  letter-spacing: -0.02em;
 }
 
-/* --- COMPONENTES GENERALES --- */
+/* --- BOTONES (Estilo Arquitectónico) --- */
 .btn-primary {
   background-color: var(--color-accent);
   color: var(--color-white);
-  padding: 0.8rem 2rem;
-  border-radius: 0px; /* Bordes rectos para estilo arquitectónico */
+  padding: 1rem 2.5rem;
+  border-radius: 0px; /* Ángulos rectos = Arquitectura moderna */
   font-weight: 600;
-  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   border: 1px solid var(--color-accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .btn-primary:hover {
-  background-color: var(--color-accent-hover);
+  background-color: transparent;
+  color: var(--color-accent);
   transform: translateY(-2px);
 }
 
 .btn-outline {
   background-color: transparent;
-  color: var(--color-accent);
-  border: 1px solid var(--color-accent);
-  padding: 0.8rem 2rem;
+  color: var(--color-text);
+  border: 1px solid var(--color-text);
+  padding: 1rem 2.5rem;
   border-radius: 0px;
   font-weight: 600;
-  transition: all 0.3s ease;
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.4s ease;
 }
 
 .btn-outline:hover {
-  background-color: var(--color-accent);
-  color: var(--color-white);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
 }
 
-/* --- ESTILOS DEL HERO --- */
-.hero {
-  min-height: 90vh; /* Un poco menos para ver que hay contenido abajo */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 5%;
-  padding-top: 80px; /* Espacio para el menú fijo */
+/* --- ZONAS SEGURAS Y ESTRUCTURA --- */
+.container-safe {
+  max-width: 1440px; /* Ancho máximo para pantallas grandes (iMacs) */
+  margin: 0 auto;
+  padding-left: var(--page-padding);
+  padding-right: var(--page-padding);
 }
 
-.hero-title {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  color: var(--color-text); /* Título en oscuro para contraste */
-}
-
-.hero-title span {
-  color: var(--color-accent); /* Solo palabras clave en terracota */
-}
-
-/* --- FONDO SUTIL --- */
-.bg-root {
+/* --- FONDO SUTIL (Textura de calidad) --- */
+.bg-texture {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   z-index: -1;
-  opacity: 0.4;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
   pointer-events: none;
-  background-image: radial-gradient(var(--color-accent) 0.5px, transparent 0.5px);
-  background-size: 20px 20px; /* Patrón de puntos sutil */
 }
