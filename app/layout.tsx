@@ -3,8 +3,9 @@ import Script from 'next/script';
 import { Montserrat } from "next/font/google";
 import "./globals.css";
 import Preloader from "@/components/Preloader"; // Importar Preloader
-import FloatingCTA from "@/components/FloatingCTA"; // Importar CTA
+import FloatingCTA from "@/components/FloatingCTA"; // Importar Botón Flotante
 
+// Configuración de fuente Montserrat
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
@@ -27,14 +28,19 @@ export default function RootLayout({
   return (
     <html lang="es" className={montserrat.variable}>
       <body>
-        <Preloader /> {/* Intro Cinemática */}
+        {/* 1. Preloader Cinemático (Carga antes que nada) */}
+        <Preloader />
         
+        {/* 2. Textura de fondo sutil */}
         <div className="bg-texture"></div>
         
+        {/* 3. Contenido de la página */}
         {children}
         
-        <FloatingCTA /> {/* Botón WhatsApp siempre visible */}
+        {/* 4. Botón de Acción Flotante (WhatsApp) */}
+        <FloatingCTA />
 
+        {/* 5. Scripts de Analítica */}
         {GA_ID && (
           <>
             <Script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />

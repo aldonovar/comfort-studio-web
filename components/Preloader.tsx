@@ -4,40 +4,44 @@ import gsap from 'gsap';
 import Image from 'next/image';
 
 export default function Preloader() {
-  // Iniciamos visible solo si es la primera carga (podríamos usar sessionStorage luego)
   const [isVisible, setIsVisible] = useState(true);
   const containerRef = useRef(null);
   const logoRef = useRef(null);
+  const textRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({
         onComplete: () => {
           setIsVisible(false);
-          document.body.style.overflow = 'auto'; // Liberar scroll
+          document.body.style.overflow = 'auto'; // Reactivar scroll
         }
       });
 
-      // Bloquear scroll al inicio
+      // 1. Bloquear scroll inicial
       document.body.style.overflow = 'hidden';
 
-      // 1. Entrada elegante del logo
-      tl.fromTo(logoRef.current, 
-        { opacity: 0, scale: 0.9, filter: 'blur(10px)' },
-        { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 0.8, ease: "power3.out" }
-      )
-      // 2. Pequeña pausa para reconocimiento de marca
-      .to(logoRef.current, { 
-        opacity: 0, 
-        y: -20, 
-        duration: 0.5, 
-        delay: 0.3, // Tiempo de lectura de marca
-        ease: "power3.in" 
+      // 2. Animación de Entrada del Logo
+      tl.to(logoRef.current, { 
+        opacity: 1, 
+        scale: 1, 
+        duration: 1, 
+        ease: "power3.out" 
       })
-      // 3. La cortina se abre revelando la web
-      .to(containerRef.current, {
-        height: 0,
+      .to(textRef.current, {
+        opacity: 1,
+        y: 0,
         duration: 0.8,
+        ease: "power3.out"
+      }, "-=0.5") // Solapar animación
+      
+      // 3. Pausa dramática (Lectura de marca)
+      .to({}, { duration: 0.5 }) 
+
+      // 4. Salida (El telón sube)
+      .to(containerRef.current, {
+        yPercent: -100,
+        duration: 1.2,
         ease: "expo.inOut"
       });
     });
@@ -54,24 +58,50 @@ export default function Preloader() {
         position: 'fixed',
         top: 0,
         left: 0,
-        width: '100%',
+        width: '100vw',
         height: '100vh',
-        backgroundColor: '#faf8f1', // Color base de tu marca
+        backgroundColor: '#faf8f1', // Color Base (Crema)
         zIndex: 9999,
         display: 'flex',
+        flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        overflow: 'hidden'
+        gap: '20px'
       }}
     >
-      <div ref={logoRef} style={{ position: 'relative', width: '100px', height: '100px' }}>
+      {/* Logo Container */}
+      <div ref={logoRef} style={{ 
+        position: 'relative', 
+        width: '120px', 
+        height: '120px', 
+        opacity: 0, 
+        transform: 'scale(0.8)' 
+      }}>
         <Image 
           src="/logo.png" 
           alt="Comfort Studio" 
           fill 
           style={{ objectFit: 'contain' }}
-          priority // Carga prioritaria para que aparezca instantáneo
+          priority
         />
+      </div>
+
+      {/* Texto de Carga (Opcional, Branding) */}
+      <div ref={textRef} style={{ 
+        opacity: 0, 
+        transform: 'translateY(20px)',
+        textAlign: 'center'
+      }}>
+        <h2 style={{ 
+          fontFamily: 'var(--font-montserrat)', 
+          color: '#b07357', 
+          fontSize: '0.8rem', 
+          letterSpacing: '4px',
+          fontWeight: 600,
+          textTransform: 'uppercase'
+        }}>
+          Comfort Studio
+        </h2>
       </div>
     </div>
   );
