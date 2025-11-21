@@ -1,6 +1,14 @@
 'use client';
 
 import { useScrollReveal } from '@/hooks/useScrollReveal';
+import dynamic from 'next/dynamic';
+
+// Importación dinámica para no bloquear la carga inicial (CLAVE PARA PERFORMANCE)
+// Esto hace que el 3D se cargue en segundo plano mientras el usuario ya ve el texto.
+const Scene3D = dynamic(() => import('./Scene3D'), { 
+  ssr: false, // No renderizar en servidor (el 3D es solo cliente)
+  loading: () => <div className="w-full h-full bg-transparent" /> // Placeholder invisible
+});
 
 export default function Hero() {
   // Activamos el hook de animación (GSAP)
@@ -11,9 +19,9 @@ export default function Hero() {
       id="inicio" 
       className="hero" 
       ref={revealRef}
-      style={{ position: 'relative', overflow: 'hidden' }}
+      style={{ position: 'relative', overflow: 'hidden', minHeight: '100vh' }}
     >
-      {/* Contenedor Principal */}
+      {/* Contenedor Principal del Texto (Izquierda) */}
       <div style={{ maxWidth: '1000px', position: 'relative', zIndex: 10 }}>
         
         {/* 1. Eyebrow (Pequeño texto superior) */}
@@ -28,7 +36,7 @@ export default function Hero() {
         </h1>
         
         {/* 3. Subtítulo */}
-        <p className="hero-sub" style={{ fontSize: '1.1rem', maxWidth: '600px', lineHeight: '1.7', marginBottom: '2.5rem', color: '#555' }}>
+        <p className="hero-sub" style={{ fontSize: '1.1rem', maxWidth: '550px', lineHeight: '1.7', marginBottom: '2.5rem', color: '#555' }}>
           Especialistas en diseño y construcción de terrazas, techos sol y sombra 
           y sistemas bioclimáticos en Lima. Transformamos tu azotea o jardín 
           en el lugar favorito de tu hogar.
@@ -47,7 +55,7 @@ export default function Hero() {
           </span>
         </div>
 
-        {/* 5. Botones de Acción (Usando las clases de globals.css) */}
+        {/* 5. Botones de Acción */}
         <div className="hero-actions" style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
           <a href="#portafolio" className="btn-primary" style={{ textDecoration: 'none', display: 'inline-block' }}>
             VER PROYECTOS
@@ -58,19 +66,18 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* 6. Elemento Visual (Placeholder para el futuro render 3D/Video) */}
+      {/* 6. Elemento Visual 3D (Derecha / Fondo) */}
       <div className="hero-visual" style={{
         position: 'absolute',
-        right: '-10%',
+        right: '-5%', // Ajustado para dar espacio
         top: '50%',
         transform: 'translateY(-50%)',
-        width: '50vw',
-        height: '70vh',
-        background: 'radial-gradient(circle, rgba(176,115,87,0.1) 0%, rgba(250,248,241,0) 70%)',
-        zIndex: -1,
-        pointerEvents: 'none'
+        width: '60vw', // Un poco más ancho para lucir el 3D
+        height: '85vh',
+        zIndex: 1, // Detrás del texto si la pantalla es pequeña, pero visible
+        pointerEvents: 'auto' // Permitir interacción (rotar el modelo)
       }}>
-        {/* Aquí irán las animaciones de partículas o 3D en la Fase de Diseño Avanzado */}
+        <Scene3D />
       </div>
     </section>
   );
