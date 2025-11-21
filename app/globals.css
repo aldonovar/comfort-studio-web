@@ -3,141 +3,70 @@
 @tailwind utilities;
 
 :root {
-  /* --- NUEVA IDENTIDAD COMFORT STUDIO --- */
-  --color-bg: #faf8f1;       /* COLOR BASE (Crema Arena) */
-  --color-text: #2c2c2c;     /* Gris oscuro para lectura (Elegante) */
-  --color-accent: #b07357;   /* COLOR PRINCIPAL (Terracota Branding) */
-  --color-accent-hover: #965d44; /* Oscurecido para interacciones */
+  --color-bg: #faf8f1;
+  --color-text: #2c2c2c;
+  --color-accent: #b07357;
   --color-white: #ffffff;
-  
-  /* Variables de espaciado seguro */
-  --nav-height: 90px;
-  --page-padding: 5%;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  /* La fuente se inyectará desde layout.tsx */
+html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden;
-  -webkit-font-smoothing: antialiased; /* Texto más nítido en Mac/iOS */
+  scroll-behavior: smooth;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden; /* Evita scroll horizontal indeseado */
 }
 
-/* --- TIPOGRAFÍA --- */
-h1, h2, h3, h4, .brand-font {
-  color: var(--color-accent);
-  font-weight: 700; 
+/* Tipografía */
+h1, h2, h3 {
+  font-weight: 700;
   letter-spacing: -0.02em;
 }
 
-/* --- BOTONES (Estilo Arquitectónico) --- */
+/* Botones */
 .btn-primary {
   background-color: var(--color-accent);
   color: var(--color-white);
-  padding: 1rem 2.5rem;
-  border-radius: 0px; /* Ángulos rectos = Arquitectura moderna */
+  padding: 1rem 2rem;
   font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
   text-transform: uppercase;
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
   border: 1px solid var(--color-accent);
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .btn-primary:hover {
   background-color: transparent;
   color: var(--color-accent);
-  transform: translateY(-2px);
 }
 
 .btn-outline {
   background-color: transparent;
   color: var(--color-text);
-  border: 1px solid var(--color-text);
-  padding: 1rem 2.5rem;
-  border-radius: 0px;
+  padding: 1rem 2rem;
   font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 1px;
   text-transform: uppercase;
-  transition: all 0.4s ease;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .btn-outline:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  background-color: rgba(0,0,0,0.05);
 }
 
-/* --- ZONAS SEGURAS Y ESTRUCTURA --- */
+/* Contenedor Seguro */
 .container-safe {
-  max-width: 1440px; /* Ancho máximo para pantallas grandes (iMacs) */
-  margin: 0 auto;
-  padding-left: var(--page-padding);
-  padding-right: var(--page-padding);
-}
-
-/* --- FONDO SUTIL (Textura de calidad) --- */
-.bg-texture {
-  position: fixed;
-  top: 0;
-  left: 0;
+  padding-left: 5%;
+  padding-right: 5%;
   width: 100%;
-  height: 100%;
-  z-index: -1;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-  pointer-events: none;
-}
-
-
-/* --- ZONAS SEGURAS PARA AUDIOVISUALES --- */
-/* Esto evita que el contenido se corte en pantallas curvas o con notch */
-@supports (padding: max(0px)) {
-  body {
-    padding-left: min(0px, env(safe-area-inset-left));
-    padding-right: min(0px, env(safe-area-inset-right));
-  }
-}
-
-/* Clase para contenedores de video/foto que deben respetar el notch */
-.safe-zone-padding {
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-/* --- MEJORA VISUAL DE SCROLLBAR (Estilo Apple/Minimal) --- */
-::-webkit-scrollbar {
-  width: 8px;
-}
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
-::-webkit-scrollbar-thumb {
-  background-color: #dcdcdc;
-  border-radius: 4px;
-  border: 2px solid var(--color-bg);
-}
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--color-accent);
-}
-
-/* --- AJUSTE RESPONSIVE PARA LA BARRA DE NAVEGACIÓN --- */
-/* Asegura que el logo no se pegue al borde en móviles */
-@media (max-width: 768px) {
-  nav {
-    padding: 1rem 1.5rem !important; /* Más aire a los lados */
-  }
-  /* Ajuste de textos para móviles para que no se vean gigantes */
-  h1.hero-title {
-    font-size: 2.5rem !important; 
-  }
 }
