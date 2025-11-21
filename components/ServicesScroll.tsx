@@ -78,7 +78,7 @@ export default function ServicesScroll() {
         position: 'relative' 
       }}>
         
-        {/* Título Estático */}
+        {/* Título Estático a la izquierda */}
         <div style={{ position: 'absolute', left: '5%', zIndex: 20, maxWidth: '280px' }}>
           <span style={{ color: '#b07357', fontWeight: 700, letterSpacing: '2px', fontSize: '0.85rem', fontFamily: 'var(--font-montserrat)' }}>EXPERIENCIA</span>
           <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.1, marginTop: '15px', color: '#fff', fontFamily: 'var(--font-montserrat)' }}>
@@ -90,11 +90,12 @@ export default function ServicesScroll() {
           <div style={{ marginTop: '2rem', width: '60px', height: '3px', backgroundColor: '#b07357' }}></div>
         </div>
 
-        {/* Tira Horizontal */}
+        {/* Tira Horizontal de imágenes */}
         <div ref={sectionRef} style={{ display: 'flex', height: '100%', paddingLeft: '35vw' }}>
           {services.map((item, index) => (
             <div key={index} style={{ 
-              width: '70vw', 
+              width: '70vw',      // Ancho base responsivo
+              maxWidth: '800px',  // Límite para que no se vea gigante en monitores grandes
               height: '100%', 
               display: 'flex', 
               alignItems: 'center', 
@@ -104,8 +105,8 @@ export default function ServicesScroll() {
                 position: 'relative', 
                 width: '100%', 
                 height: '65vh', 
-                borderRadius: '4px',
-                overflow: 'hidden',
+                borderRadius: '4px', 
+                overflow: 'hidden', 
                 boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
                 backgroundColor: '#2c2c2c'
               }}>

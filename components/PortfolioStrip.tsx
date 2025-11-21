@@ -1,62 +1,77 @@
 'use client';
 import React from 'react';
-import { useScrollReveal } from '@/hooks/useScrollReveal';
+import Image from 'next/image';
 
-// Datos de ejemplo basados en tu PDF (Hard-coded por ahora)
 const projects = [
   { 
     id: 1, 
     name: "Miraflores", 
-    tags: "Sol & Sombra + barra", 
+    tags: "Sol & Sombra + Barra", 
     image: "https://images.unsplash.com/photo-1600585154206-0ef3c08c0632?auto=format&fit=crop&w=900&q=80" 
   },
   { 
     id: 2, 
     name: "San Isidro", 
-    tags: "Bioclimático motorizado", 
+    tags: "Bioclimático Motorizado", 
     image: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&w=900&q=80" 
   },
   { 
     id: 3, 
     name: "La Molina", 
-    tags: "Outdoor Kitchen completa", 
+    tags: "Outdoor Kitchen", 
     image: "https://images.unsplash.com/photo-1505691723518-36a5ac3be353?auto=format&fit=crop&w=900&q=80" 
   },
   { 
     id: 4, 
     name: "Barranco", 
-    tags: "Terraza social", 
+    tags: "Terraza Social", 
     image: "https://images.unsplash.com/photo-1479839672679-a46483c0e7c8?auto=format&fit=crop&w=900&q=80" 
   },
 ];
 
-const PortfolioItem = ({ project }: { project: typeof projects[0] }) => {
-  return (
-    <div className="portfolio-item">
-      <img src={project.image} alt={project.name} />
-      <div className="portfolio-label">
-        <span>{project.name}</span>
-        <span style={{ opacity: 0.7 }}>{project.tags}</span>
-      </div>
-    </div>
-  );
-};
-
-// ESTA ES LA PARTE CLAVE: export default function
 export default function PortfolioStrip() {
-  const revealRef = useScrollReveal(); 
-  
   return (
-    <section id="portafolio" className="reveal" ref={revealRef}>
-      <div className="section-label">Proyectos</div>
-      <h2 className="section-title">Showroom horizontal con efecto “producto premium”.</h2>
-      <p className="section-sub">
-        Carrusel suave inspirado en webs de software y fotografía, adaptado a terrazas.
-      </p>
+    <section id="portafolio" style={{ padding: '5rem 5%', backgroundColor: '#faf8f1' }}>
+      {/* Encabezado de Sección */}
+      <div style={{ marginBottom: '3rem', textAlign: 'center' }}>
+        <span style={{ color: '#b07357', fontWeight: 700, letterSpacing: '2px', fontSize: '0.9rem', textTransform: 'uppercase' }}>
+          PORTAFOLIO
+        </span>
+        <h2 style={{ fontSize: '2.5rem', color: '#2c2c2c', marginTop: '10px', fontFamily: 'var(--font-montserrat)' }}>
+          Proyectos Destacados
+        </h2>
+      </div>
       
-      <div className="portfolio-strip">
+      {/* Grilla de Proyectos */}
+      <div style={{ 
+        display: 'grid', 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', // Responsivo automático
+        gap: '2rem' 
+      }}>
         {projects.map(p => (
-          <PortfolioItem key={p.id} project={p} />
+          <div key={p.id} style={{ position: 'relative', height: '400px', borderRadius: '4px', overflow: 'hidden', cursor: 'pointer', group: 'true' }}>
+            {/* Imagen */}
+            <Image 
+              src={p.image} 
+              alt={p.name} 
+              fill
+              style={{ objectFit: 'cover', transition: 'transform 0.5s ease' }}
+              className="hover:scale-105" // Efecto zoom al pasar mouse
+            />
+            
+            {/* Overlay Oscuro al Hover (Opcional, para legibilidad) */}
+            <div style={{ 
+              position: 'absolute', 
+              inset: 0, 
+              background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%)' 
+            }}></div>
+
+            {/* Texto sobre la imagen */}
+            <div style={{ position: 'absolute', bottom: '20px', left: '20px', color: 'white' }}>
+              <h3 style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>{p.name}</h3>
+              <p style={{ fontSize: '0.9rem', opacity: 0.9, marginTop: '5px' }}>{p.tags}</p>
+            </div>
+          </div>
         ))}
       </div>
     </section>
