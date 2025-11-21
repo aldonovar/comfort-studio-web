@@ -14,14 +14,13 @@ export default function Preloader() {
       const tl = gsap.timeline({
         onComplete: () => {
           setIsVisible(false);
-          document.body.style.overflow = 'auto'; // Reactivar scroll
+          document.body.style.overflow = 'auto';
         }
       });
 
-      // 1. Bloquear scroll inicial
       document.body.style.overflow = 'hidden';
 
-      // 2. Animación de Entrada del Logo
+      // Animación de entrada
       tl.to(logoRef.current, { 
         opacity: 1, 
         scale: 1, 
@@ -33,12 +32,11 @@ export default function Preloader() {
         y: 0,
         duration: 0.8,
         ease: "power3.out"
-      }, "-=0.5") // Solapar animación
+      }, "-=0.5")
       
-      // 3. Pausa dramática (Lectura de marca)
-      .to({}, { duration: 0.5 }) 
+      .to({}, { duration: 0.8 }) // Pausa para ver el logo
 
-      // 4. Salida (El telón sube)
+      // Salida hacia arriba
       .to(containerRef.current, {
         yPercent: -100,
         duration: 1.2,
@@ -60,7 +58,7 @@ export default function Preloader() {
         left: 0,
         width: '100vw',
         height: '100vh',
-        backgroundColor: '#faf8f1', // Color Base (Crema)
+        backgroundColor: '#faf8f1',
         zIndex: 9999,
         display: 'flex',
         flexDirection: 'column',
@@ -69,16 +67,10 @@ export default function Preloader() {
         gap: '20px'
       }}
     >
-      {/* Logo Container */}
-      <div ref={logoRef} style={{ 
-        position: 'relative', 
-        width: '120px', 
-        height: '120px', 
-        opacity: 0, 
-        transform: 'scale(0.8)' 
-      }}>
+      {/* Logo */}
+      <div ref={logoRef} style={{ position: 'relative', width: '150px', height: '150px', opacity: 0, transform: 'scale(0.8)' }}>
         <Image 
-          src="/logo.jpg" 
+          src="/logo.png" // Asegúrate que este sea el nombre exacto en public/
           alt="Comfort Studio" 
           fill 
           style={{ objectFit: 'contain' }}
@@ -86,20 +78,9 @@ export default function Preloader() {
         />
       </div>
 
-      {/* Texto de Carga (Opcional, Branding) */}
-      <div ref={textRef} style={{ 
-        opacity: 0, 
-        transform: 'translateY(20px)',
-        textAlign: 'center'
-      }}>
-        <h2 style={{ 
-          fontFamily: 'var(--font-montserrat)', 
-          color: '#b07357', 
-          fontSize: '0.8rem', 
-          letterSpacing: '4px',
-          fontWeight: 600,
-          textTransform: 'uppercase'
-        }}>
+      {/* Texto de Marca */}
+      <div ref={textRef} style={{ opacity: 0, transform: 'translateY(20px)', textAlign: 'center' }}>
+        <h2 style={{ fontFamily: 'var(--font-montserrat)', color: '#b07357', fontSize: '0.9rem', letterSpacing: '4px', fontWeight: 600, textTransform: 'uppercase' }}>
           Comfort Studio
         </h2>
       </div>

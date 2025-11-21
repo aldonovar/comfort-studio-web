@@ -3,10 +3,16 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Registrar ScrollTrigger (solo una vez)
-gsap.registerPlugin(ScrollTrigger);
+// Intentar registrar ScrollTrigger. El try/catch es una buena práctica en Next.js
+try {
+    gsap.registerPlugin(ScrollTrigger);
+} catch (e) {
+    if (typeof window !== 'undefined') {
+        // console.error("GSAP ScrollTrigger plugin failed to register.");
+    }
+}
 
-// Hook para animaciones de entrada basadas en scroll
+// Hook para animaciones de entrada basadas en scroll (fade-up suave)
 export const useScrollReveal = () => {
   const ref = useRef(null);
 
