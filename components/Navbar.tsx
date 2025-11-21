@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import Image from 'next/image'; // Usaremos Image de Next.js para optimización
+import Image from 'next/image'; // Importante para el logo
 import { useState, useEffect } from 'react';
 
 export default function Navbar() {
@@ -15,6 +15,14 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  }, [menuOpen]);
+
   return (
     <>
       <nav style={{
@@ -23,39 +31,43 @@ export default function Navbar() {
         left: 0,
         width: '100%',
         zIndex: 100,
-        padding: scrolled ? '1rem 5%' : '2rem 5%', // Efecto de contracción elegante
-        backgroundColor: scrolled ? 'rgba(250, 248, 241, 0.9)' : 'transparent', // #faf8f1 con transparencia
+        padding: scrolled ? '10px 5%' : '25px 5%', // Ajustado para ser más elegante
+        backgroundColor: scrolled ? 'rgba(250, 248, 241, 0.95)' : 'transparent',
         backdropFilter: scrolled ? 'blur(12px)' : 'none',
         borderBottom: scrolled ? '1px solid rgba(176, 115, 87, 0.1)' : 'none',
-        transition: 'all 0.4s ease',
+        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
         display: 'flex',
         justifyContent: 'space-between',
-        alignItems: 'center'
+        alignItems: 'center',
+        paddingTop: scrolled ? 'max(10px, env(safe-area-inset-top))' : 'max(25px, env(safe-area-inset-top))'
       }}>
-        {/* LOGO E IDENTIDAD */}
-        <Link href="/" className="flex items-center gap-3 group">
-          {/* Si no tienes el logo.png aún en public, usa este placeholder estilizado */}
+        
+        {/* --- LOGO REAL --- */}
+        <Link href="/" style={{ textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '15px', zIndex: 101 }}>
           <div style={{ 
-            width: '40px', 
-            height: '40px', 
-            border: '2px solid #b07357', 
-            display: 'flex', 
-            alignItems: 'center', 
-            justifyContent: 'center',
-            color: '#b07357',
-            fontWeight: 'bold',
-            fontSize: '20px'
+            position: 'relative', 
+            width: scrolled ? '45px' : '55px', // El logo se achica sutilmente al bajar
+            height: scrolled ? '45px' : '55px',
+            transition: 'all 0.4s ease'
           }}>
-            CS
+            <Image 
+              src="/logo.png" 
+              alt="Comfort Studio Logo" 
+              fill
+              style={{ objectFit: 'contain' }}
+              priority
+            />
           </div>
-          <div className="flex flex-col">
+          
+          {/* Texto de Marca (Tipografía Montserrat) */}
+          <div className="flex flex-col justify-center" style={{ lineHeight: 1 }}>
             <span style={{ 
               fontFamily: 'var(--font-montserrat)', 
               fontWeight: 700, 
               color: '#b07357', 
-              fontSize: '1.1rem',
-              lineHeight: '1',
-              letterSpacing: '1px'
+              fontSize: scrolled ? '1rem' : '1.1rem',
+              letterSpacing: '2px',
+              transition: 'all 0.4s ease'
             }}>
               COMFORT
             </span>
@@ -63,23 +75,32 @@ export default function Navbar() {
               fontFamily: 'var(--font-montserrat)', 
               fontWeight: 400, 
               color: '#2c2c2c', 
-              fontSize: '1rem',
-              lineHeight: '1',
-              letterSpacing: '2px'
+              fontSize: scrolled ? '0.85rem' : '0.95rem',
+              letterSpacing: '4px', // Más espaciado para elegancia
+              transition: 'all 0.4s ease'
             }}>
               STUDIO
             </span>
           </div>
         </Link>
 
-        {/* MENU ESCRITORIO */}
-        <div className="hidden md:flex gap-8 items-center">
-          {['Inicio', 'Servicios', 'Proyectos', 'Nosotros'].map((item) => (
+        {/* --- MENÚ ESCRITORIO --- */}
+        <div className="desktop-menu" style={{ display: 'flex', gap: '3rem', alignItems: 'center' }}>
+          {['Inicio', 'Servicios', 'Proyectos', 'Experiencia'].map((item) => (
             <Link 
               key={item} 
               href={`#${item.toLowerCase()}`}
-              className="text-sm uppercase tracking-widest font-medium hover:text-[#b07357] transition-colors"
-              style={{ color: '#2c2c2c' }}
+              style={{ 
+                fontSize: '0.8rem', 
+                textTransform: 'uppercase', 
+                letterSpacing: '2px', 
+                fontWeight: 600, 
+                color: '#2c2c2c',
+                textDecoration: 'none',
+                position: 'relative',
+                transition: 'color 0.3s'
+              }}
+              className="hover:text-[#b07357]"
             >
               {item}
             </Link>
@@ -87,57 +108,67 @@ export default function Navbar() {
           <Link 
             href="#contacto" 
             className="btn-primary"
-            style={{ padding: '0.6rem 1.5rem', fontSize: '0.8rem' }}
+            style={{ padding: '0.8rem 2rem', fontSize: '0.8rem' }}
           >
-            Cotizar
+            COTIZAR
           </Link>
         </div>
 
-        {/* MENU MOVIL (HAMBURGUESA) */}
+        {/* --- BOTÓN HAMBURGUESA --- */}
         <button 
-          className="md:hidden text-[#b07357]"
+          className="mobile-toggle"
           onClick={() => setMenuOpen(!menuOpen)}
+          style={{ 
+            background: 'none', 
+            border: 'none', 
+            cursor: 'pointer', 
+            zIndex: 101,
+            color: '#b07357'
+          }}
         >
-          <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M3 12h18M3 6h18M3 18h18" />
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            {menuOpen ? <path d="M18 6L6 18M6 6l12 12" /> : <path d="M3 12h18M3 6h18M3 18h18" />}
           </svg>
         </button>
       </nav>
 
-      {/* MENU MOVIL DESPLEGABLE */}
-      {menuOpen && (
-        <div style={{
-          position: 'fixed',
-          top: '0',
-          left: '0',
-          width: '100%',
-          height: '100vh',
-          backgroundColor: '#faf8f1',
-          zIndex: 99,
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '2rem'
-        }}>
-          <button 
-            onClick={() => setMenuOpen(false)}
-            style={{ position: 'absolute', top: '2rem', right: '2rem', fontSize: '2rem', color: '#b07357' }}
-          >
-            &times;
-          </button>
-          {['Inicio', 'Servicios', 'Proyectos', 'Nosotros', 'Contacto'].map((item) => (
-            <Link 
-              key={item} 
-              href={`#${item.toLowerCase()}`}
-              onClick={() => setMenuOpen(false)}
-              style={{ fontSize: '1.5rem', color: '#2c2c2c', fontWeight: 600 }}
-            >
-              {item}
-            </Link>
-          ))}
+      {/* --- MENÚ MÓVIL --- */}
+      <div style={{
+        position: 'fixed', top: 0, left: 0, width: '100%', height: '100dvh',
+        backgroundColor: '#faf8f1', zIndex: 99,
+        display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '2rem',
+        transition: 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s',
+        transform: menuOpen ? 'translateY(0)' : 'translateY(-100%)',
+        opacity: menuOpen ? 1 : 0,
+        paddingTop: 'env(safe-area-inset-top)'
+      }}>
+        {/* Logo en menú móvil */}
+        <div style={{ width: '80px', height: '80px', position: 'relative', marginBottom: '20px' }}>
+             <Image src="/logo.png" alt="Comfort Studio" fill style={{ objectFit: 'contain' }} />
         </div>
-      )}
+
+        {['Inicio', 'Servicios', 'Proyectos', 'Experiencia', 'Contacto'].map((item) => (
+          <Link 
+            key={item} 
+            href={`#${item.toLowerCase()}`}
+            onClick={() => setMenuOpen(false)}
+            style={{ fontFamily: 'var(--font-montserrat)', fontSize: '1.5rem', color: '#2c2c2c', fontWeight: 600, textDecoration: 'none', letterSpacing: '1px' }}
+          >
+            {item}
+          </Link>
+        ))}
+      </div>
+      
+      <style jsx global>{`
+        @media (max-width: 900px) {
+          .desktop-menu { display: none !important; }
+          .mobile-toggle { display: block !important; }
+        }
+        @media (min-width: 901px) {
+          .desktop-menu { display: flex !important; }
+          .mobile-toggle { display: none !important; }
+        }
+      `}</style>
     </>
   );
 }
