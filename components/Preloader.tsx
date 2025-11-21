@@ -78,7 +78,7 @@ export default function Preloader() {
         transform: 'scale(0.8)' 
       }}>
         <Image 
-          src="/logo.png" 
+          src="/logo.jpg" 
           alt="Comfort Studio" 
           fill 
           style={{ objectFit: 'contain' }}

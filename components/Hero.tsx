@@ -24,7 +24,7 @@ export default function Hero() {
       {/* 1. FONDO DE IMAGEN (Estático pero impactante) */}
       <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
         <Image 
-          src="https://images.unsplash.com/photo-1628611225249-6c0ebcd52025?q=80&w=2070" // Imagen de terraza de lujo
+          src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=1992&auto=format&fit=crop" // Imagen de terraza de lujo
           alt="Terraza de Lujo Comfort Studio"
           fill
           style={{ objectFit: 'cover', objectPosition: 'center' }}
