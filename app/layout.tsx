@@ -1,27 +1,22 @@
 import type { Metadata } from "next";
 import Script from 'next/script';
-// 1. IMPORTAR MONTSERRAT (Tu tipografía corporativa)
 import { Montserrat } from "next/font/google";
 import "./globals.css";
+import Preloader from "@/components/Preloader"; // Importar Preloader
+import FloatingCTA from "@/components/FloatingCTA"; // Importar CTA
 
-// 2. CONFIGURAR FUENTE
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
-  weight: ['300', '400', '500', '600', '700'], // Pesos para diseño fino y títulos fuertes
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
 });
 
-// IDs de seguimiento
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-const META_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
 
 export const metadata: Metadata = {
-  title: "Comfort Studio | Diseño de Terrazas y Techos Sol y Sombra",
-  description: "Especialistas en arquitectura exterior, techos bioclimáticos y Outdoor Living en Perú.",
-  icons: {
-    icon: '/favicon.ico', // Asegúrate de tener esto pronto
-  },
+  title: "Comfort Studio | Diseño y Construcción de Terrazas",
+  description: "Especialistas en Outdoor Living, techos sol y sombra y arquitectura exterior en Perú.",
 };
 
 export default function RootLayout({
@@ -32,12 +27,14 @@ export default function RootLayout({
   return (
     <html lang="es" className={montserrat.variable}>
       <body>
-        {/* Textura de fondo para dar sensación de materialidad */}
+        <Preloader /> {/* Intro Cinemática */}
+        
         <div className="bg-texture"></div>
         
         {children}
+        
+        <FloatingCTA /> {/* Botón WhatsApp siempre visible */}
 
-        {/* ANALYTICS (No tocar) */}
         {GA_ID && (
           <>
             <Script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />

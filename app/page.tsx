@@ -1,36 +1,29 @@
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import ServicesScroll from '@/components/ServicesScroll'; // <--- IMPORTAR
+import ServicesScroll from '@/components/ServicesScroll';
 import PortfolioStrip from '@/components/PortfolioStrip';
 
 export default function Home() {
   return (
     <main>
-      {/* 1. NAVEGACIÓN */}
-      <Navbar />
+      <Navbar /> 
+      {/* El Navbar ahora incluye internamente el TopBanner posicionado */}
 
-      {/* 2. HERO PRINCIPAL */}
       <Hero />
 
-      {/* 3. EXPERIENCIA SCROLL (Efecto Tech) */}
-      {/* Reemplazamos el div de prueba con nuestro componente potente */}
       <ServicesScroll />
 
-      {/* 4. PORTAFOLIO */}
       <PortfolioStrip />
 
-      {/* 5. FOOTER (Simple por ahora) */}
-      <footer style={{ 
-        backgroundColor: '#2c2c2c', 
-        color: '#faf8f1', 
-        padding: '3rem 5%', 
-        textAlign: 'center',
-        marginTop: '0' // Quitamos margen porque el scroll termina exacto
-      }}>
-        <h3 style={{ color: '#b07357', marginBottom: '1rem' }}>COMFORT STUDIO</h3>
-        <p>Diseño y Construcción de Terrazas en Lima, Perú.</p>
-        <p style={{ opacity: 0.5, marginTop: '2rem', fontSize: '0.9rem' }}>
-          © 2024 Comfort Studio. Todos los derechos reservados.
+      <footer style={{ backgroundColor: '#2c2c2c', color: '#faf8f1', padding: '4rem 5%', textAlign: 'center' }}>
+        <h3 style={{ color: '#b07357', marginBottom: '1rem', fontSize: '1.5rem' }}>COMFORT STUDIO</h3>
+        <div className="flex justify-center gap-4 mb-8 opacity-70 text-sm">
+          <a href="#">Instagram</a>
+          <a href="#">Facebook</a>
+          <a href="#">LinkedIn</a>
+        </div>
+        <p style={{ opacity: 0.5, fontSize: '0.8rem' }}>
+          © 2025 Comfort Studio. Lima, Perú.
         </p>
       </footer>
     </main>
