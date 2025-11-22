@@ -60,3 +60,33 @@ export default function RootLayout({
     </html>
   );
 }
+
+// ... imports anteriores ...
+import SmoothScroller from "@/components/SmoothScroller"; // <--- IMPORTAR AQUÍ
+
+// ... (resto de configuración metadata y fuentes)
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="es" className={montserrat.variable}>
+      <body>
+        <Preloader />
+        <SmoothScroller /> {/* <--- ACTIVAR EL MOTOR AQUÍ */}
+        
+        <div className="bg-root">
+          <div className="bg-grid"></div>
+        </div>
+        
+        {children}
+        
+        <FloatingCTA />
+
+        {/* ... Scripts de Analytics ... */}
+      </body>
+    </html>
+  );
+}
