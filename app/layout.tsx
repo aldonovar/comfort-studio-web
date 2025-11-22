@@ -31,8 +31,10 @@ export default function RootLayout({
         {/* 1. Preloader Cinemático (Carga antes que nada) */}
         <Preloader />
         
-        {/* 2. Textura de fondo sutil */}
-        <div className="bg-texture"></div>
+        {/* 2. FONDO ANIMADO (Estructura actualizada según el nuevo diseño) */}
+        <div className="bg-root">
+          <div className="bg-grid"></div>
+        </div>
         
         {/* 3. Contenido de la página */}
         {children}

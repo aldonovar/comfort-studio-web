@@ -3,83 +3,88 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #faf8f1;
-  --color-text: #2c2c2c;
-  --color-accent: #b07357;
-  --color-white: #ffffff;
+  /* PALETA EXACTA DE TU PROPUESTA */
+  --terracota: #b86f4b;
+  --terracota-soft: #d28a5f;
+  --terracota-pale: #f3d3b7;
+  --sand: #f9f3ec;      /* Color Base */
+  --sand-soft: #f2e3d5;
+  --ink: #1e1713;       /* Texto Principal */
+  --ink-soft: #4d3d34;
+  --accent-gold: #f6c892;
+  --white: #ffffff;
+  
+  /* Variables de Sistema */
+  --font-montserrat: var(--font-montserrat);
+  --radius-xl: 28px;
+  --radius-lg: 20px;
+  --nav-height: 120px;
 }
 
-html, body {
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--sand);
+  color: var(--ink);
+  font-family: var(--font-montserrat), sans-serif;
   margin: 0;
   padding: 0;
-  scroll-behavior: smooth;
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  overflow-x: hidden; /* Evita scroll horizontal indeseado */
+  overflow-x: hidden;
 }
 
-/* Tipografía */
-h1, h2, h3 {
-  font-weight: 700;
-  letter-spacing: -0.02em;
+/* --- FONDO ANIMADO (Tu referencia) --- */
+.bg-root {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background: radial-gradient(circle at top left, #fdf7f1 0, #f4e3d4 40%, #ecd4c3 100%);
 }
 
-/* Botones */
+.bg-grid {
+  position: absolute;
+  inset: -40px;
+  background-image:
+    linear-gradient(rgba(184,111,75,0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184,111,75,0.06) 1px, transparent 1px);
+  background-size: 80px 80px;
+  mix-blend-mode: multiply;
+  opacity: 0.5;
+  animation: gridMove 60s linear infinite;
+}
+
+@keyframes gridMove {
+  0% { transform: translate3d(0,0,0); }
+  100% { transform: translate3d(-40px,-40px,0); }
+}
+
+/* --- BOTONES ESTILO PROPUESTA --- */
 .btn-primary {
-  background-color: var(--color-accent);
-  color: var(--color-white);
-  padding: 1rem 2rem;
+  background-color: var(--terracota);
+  color: var(--white);
+  padding: 0.8rem 2rem;
+  border-radius: 999px; /* Redondeado completo como la propuesta */
   font-weight: 600;
-  text-transform: uppercase;
+  font-size: 0.85rem;
   letter-spacing: 1px;
+  text-transform: uppercase;
   transition: all 0.3s ease;
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--terracota);
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  text-decoration: none;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(184, 111, 75, 0.2);
 }
 
 .btn-primary:hover {
-  background-color: transparent;
-  color: var(--color-accent);
+  background-color: var(--ink);
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(30, 23, 19, 0.2);
 }
 
-.btn-outline {
-  background-color: transparent;
-  color: var(--color-text);
-  padding: 1rem 2rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  transition: all 0.3s ease;
-  border: 1px solid var(--color-text);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-}
-
-.btn-outline:hover {
-  background-color: rgba(0,0,0,0.05);
-}
-
-/* Contenedor Seguro */
-.container-safe {
-  padding-left: 5%;
-  padding-right: 5%;
-  width: 100%;
-}
-
-/* --- ESTILOS DE FORMULARIO --- */
-input:focus, textarea:focus, select:focus {
-  border-color: var(--color-accent) !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 0 2px rgba(176, 115, 87, 0.1);
-}
-
-/* Quitar estilo por defecto en móviles para inputs */
-input, textarea, select {
-  -webkit-appearance: none;
-  border-radius: 0; /* Bordes rectos puros */
-}
+/* --- UTILIDADES --- */
+h1, h2, h3 { color: var(--ink); font-weight: 700; letter-spacing: -0.02em; }
+.text-accent { color: var(--terracota); }
+.container-safe { max-width: 1360px; margin: 0 auto; padding: 0 5%; }
