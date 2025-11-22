@@ -2,30 +2,25 @@ import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import ServicesScroll from '@/components/ServicesScroll';
 import PortfolioStrip from '@/components/PortfolioStrip';
+import Footer from '@/components/Footer'; // <--- Importamos el nuevo Footer
 
 export default function Home() {
   return (
     <main>
-      <Navbar /> 
-      {/* El Navbar ahora incluye internamente el TopBanner posicionado */}
+      {/* 1. NAVEGACIÓN */}
+      <Navbar />
 
+      {/* 2. HERO PRINCIPAL */}
       <Hero />
 
+      {/* 3. EXPERIENCIA SCROLL (Servicios) */}
       <ServicesScroll />
 
+      {/* 4. PORTAFOLIO */}
       <PortfolioStrip />
 
-      <footer style={{ backgroundColor: '#2c2c2c', color: '#faf8f1', padding: '4rem 5%', textAlign: 'center' }}>
-        <h3 style={{ color: '#b07357', marginBottom: '1rem', fontSize: '1.5rem' }}>COMFORT STUDIO</h3>
-        <div className="flex justify-center gap-4 mb-8 opacity-70 text-sm">
-          <a href="#">Instagram</a>
-          <a href="#">Facebook</a>
-          <a href="#">LinkedIn</a>
-        </div>
-        <p style={{ opacity: 0.5, fontSize: '0.8rem' }}>
-          © 2025 Comfort Studio. Lima, Perú.
-        </p>
-      </footer>
+      {/* 5. FOOTER */}
+      <Footer />
     </main>
   );
 }
