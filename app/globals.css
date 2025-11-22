@@ -88,3 +88,30 @@ body {
 h1, h2, h3 { color: var(--ink); font-weight: 700; letter-spacing: -0.02em; }
 .text-accent { color: var(--terracota); }
 .container-safe { max-width: 1360px; margin: 0 auto; padding: 0 5%; }
+
+/* --- ANIMACIONES MENÚ AWWWARDS --- */
+@keyframes slide-up {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* Efecto de texto hueco (Stroke) */
+.stroke-text {
+  -webkit-text-fill-color: transparent; /* Texto transparente */
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.5);
+}
+
+.stroke-text:hover {
+  -webkit-text-fill-color: #ffffff; /* Se rellena al pasar el mouse */
+  -webkit-text-stroke-color: #ffffff;
+}
+
+/* Asegurar que el logo se invierta a blanco */
+.invert {
+  filter: invert(1) brightness(2);
+}
