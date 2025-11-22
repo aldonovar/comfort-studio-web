@@ -45,21 +45,31 @@ export default function PortfolioStrip() {
       {/* Grilla de Proyectos */}
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', // Responsivo automático
+        gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', 
         gap: '2rem' 
       }}>
         {projects.map(p => (
-          <div key={p.id} style={{ position: 'relative', height: '400px', borderRadius: '4px', overflow: 'hidden', cursor: 'pointer', group: 'true' }}>
+          <div 
+            key={p.id} 
+            className="group" // Usamos className para Tailwind si lo necesitas, esto SI es válido
+            style={{ 
+              position: 'relative', 
+              height: '400px', 
+              borderRadius: '4px', 
+              overflow: 'hidden', 
+              cursor: 'pointer' 
+            }}
+          >
             {/* Imagen */}
             <Image 
               src={p.image} 
               alt={p.name} 
               fill
               style={{ objectFit: 'cover', transition: 'transform 0.5s ease' }}
-              className="hover:scale-105" // Efecto zoom al pasar mouse
+              // El hover lo manejamos con CSS en línea para asegurar compatibilidad sin Tailwind complejo
             />
             
-            {/* Overlay Oscuro al Hover (Opcional, para legibilidad) */}
+            {/* Overlay Oscuro */}
             <div style={{ 
               position: 'absolute', 
               inset: 0, 
