@@ -70,3 +70,16 @@ h1, h2, h3 {
   padding-right: 5%;
   width: 100%;
 }
+
+/* --- ESTILOS DE FORMULARIO --- */
+input:focus, textarea:focus, select:focus {
+  border-color: var(--color-accent) !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(176, 115, 87, 0.1);
+}
+
+/* Quitar estilo por defecto en móviles para inputs */
+input, textarea, select {
+  -webkit-appearance: none;
+  border-radius: 0; /* Bordes rectos puros */
+}
