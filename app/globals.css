@@ -3,20 +3,24 @@
 @tailwind utilities;
 
 :root {
-  /* PALETA DE LUJO (Afinada) */
-  --terracota: #b86f4b;
-  --terracota-soft: #d28a5f;
-  --sand: #f9f3ec;
-  /* Arena Base */
-  --ink: #1e1713;
-  /* Negro Suave/Café */
+  /* --- PALETA DE COLOR "COMFORT" (Refinada) --- */
+  /* Basada en materiales naturales: Arcilla, Arena, Madera, Piedra */
+  --terracota: #b07357;
+  --terracota-dark: #8a5a44;
+  --sand: #f4f0eb;
+  /* Un tono hueso más cálido y orgánico */
+  --ink: #1a1818;
+  /* Negro casi puro, pero cálido (como tinta china) */
+  --stone: #8c8c8c;
+  /* Gris neutro para textos secundarios */
   --white: #ffffff;
 
-  /* SISTEMA TIPOGRÁFICO */
-  /* --font-sans viene de Montserrat (Next.js) */
-  /* --font-serif viene de Cormorant (Next.js) */
+  /* --- SISTEMA TIPOGRÁFICO --- */
+  /* Se conectan con las variables de next/font definidas en layout.tsx */
   --font-body: var(--font-sans);
+  /* Montserrat */
   --font-display: var(--font-serif);
+  /* Cormorant Garamond */
 }
 
 html {
@@ -31,121 +35,148 @@ body {
   padding: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  /* Renderizado de texto nítido (Mac style) */
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- TEXTURA: RUIDO FÍLMICO (Noise) --- */
-.noise-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 999;
-  /* Por encima de casi todo, pero debajo del menú si es necesario */
-  opacity: 0.04;
-  /* Sutil, apenas perceptible */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
-
-/* --- FONDO ARQUITECTÓNICO --- */
-.bg-root {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  background: radial-gradient(circle at top left, #fdf7f1 0, #f4e3d4 40%, #ecd4c3 100%);
-}
-
-.bg-grid {
-  position: absolute;
-  inset: -40px;
-  background-image:
-    linear-gradient(rgba(184, 111, 75, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(184, 111, 75, 0.06) 1px, transparent 1px);
-  background-size: 80px 80px;
-  mix-blend-mode: multiply;
-  opacity: 0.5;
-  animation: gridMove 60s linear infinite;
-}
-
-@keyframes gridMove {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-
-  100% {
-    transform: translate3d(-40px, -40px, 0);
-  }
-}
-
-/* --- TIPOGRAFÍA UTILITIES --- */
-/* Úsala para títulos grandes: className="font-serif" */
+/* --- CLASES DE UTILIDAD TIPOGRÁFICA --- */
+/* Úsalas en tus componentes para aplicar la fuente elegante */
 .font-serif {
   font-family: var(--font-display), serif;
 }
 
-/* --- BOTONES --- */
+.font-sans {
+  font-family: var(--font-body), sans-serif;
+}
+
+/* --- TEXTURA: RUIDO FÍLMICO (NOISE) --- */
+/* Generado vía CSS/SVG para máximo rendimiento */
+.noise-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+/* --- FONDO AMBIENTAL --- */
+.bg-root {
+  background: radial-gradient(circle at 15% 50%, #fbf9f6 0%, #f4f0eb 45%, #eae5de 100%);
+}
+
+/* Grid arquitectónico muy sutil */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(176, 115, 87, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(176, 115, 87, 0.03) 1px, transparent 1px);
+  background-size: 120px 120px;
+  /* Celdas más grandes, más aire */
+}
+
+/* --- COMPONENTES DE UI (Botones estilo "Pandawa") --- */
+
 .btn-primary {
-  background-color: var(--terracota);
-  color: var(--white);
-  padding: 0.8rem 2rem;
+  background-color: var(--ink);
+  color: var(--sand);
+  padding: 1rem 2.5rem;
   border-radius: 999px;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-weight: 500;
   font-size: 0.75rem;
-  /* Más pequeño, más elegante */
-  letter-spacing: 2px;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid var(--terracota);
+  transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  border: 1px solid var(--ink);
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  cursor: pointer;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* Efecto de llenado inverso al hover */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--terracota);
+  z-index: -1;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-primary:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .btn-primary:hover {
-  background-color: var(--ink);
-  border-color: var(--ink);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(30, 23, 19, 0.2);
+  border-color: var(--terracota);
+  color: var(--white);
 }
 
 .btn-outline {
   background-color: transparent;
   color: var(--ink);
-  padding: 0.8rem 2rem;
+  padding: 1rem 2.5rem;
   border-radius: 999px;
-  font-weight: 600;
+  font-family: var(--font-body);
+  font-weight: 500;
   font-size: 0.75rem;
-  letter-spacing: 2px;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   transition: all 0.3s ease;
-  border: 1px solid var(--ink);
+  border: 1px solid rgba(26, 24, 24, 0.2);
+  /* Borde sutil */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
 }
 
 .btn-outline:hover {
-  background-color: rgba(30, 23, 19, 0.05);
-  border-color: var(--terracota);
-  color: var(--terracota);
+  border-color: var(--ink);
+  background-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
 }
 
 /* --- UTILIDADES GENERALES --- */
 .container-safe {
-  max-width: 1360px;
+  max-width: 1600px;
+  /* Más ancho, estilo moderno */
   margin: 0 auto;
-  padding: 0 5%;
+  padding: 0 4vw;
 }
 
-/* Inputs Clean */
+/* Inputs limpios y minimalistas */
+input,
+textarea,
+select {
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid rgba(26, 24, 24, 0.2) !important;
+  border-radius: 0 !important;
+  padding: 1rem 0 !important;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--ink);
+  transition: border-color 0.3s ease;
+}
+
 input:focus,
 textarea:focus,
 select:focus {
-  border-color: var(--terracota) !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 0 2px rgba(184, 111, 75, 0.1);
+  outline: none;
+  border-bottom-color: var(--terracota) !important;
+  box-shadow: none !important;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: rgba(26, 24, 24, 0.4);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
 }
