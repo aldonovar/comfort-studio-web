@@ -1,22 +1,32 @@
 import type { Metadata } from "next";
 import Script from 'next/script';
-import { Montserrat } from "next/font/google";
+import { Montserrat, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
-import Preloader from "@/components/Preloader"; // Importar Preloader
-import FloatingCTA from "@/components/FloatingCTA"; // Importar Botón Flotante
+import Preloader from "@/components/Preloader";
+import FloatingCTA from "@/components/FloatingCTA";
+import SmoothScroller from "@/components/SmoothScroller";
 
-// Configuración de fuente Montserrat
+// 1. Configuración de Fuentes
+// Montserrat: Para cuerpos de texto, UI y datos técnicos (La "Razón")
 const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-montserrat",
+  variable: "--font-sans",
   weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
+});
+
+// Cormorant Garamond: Para Títulos, citas y números grandes (La "Emoción")
+const cormorant = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-serif",
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
 });
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
 
 export const metadata: Metadata = {
-  title: "Comfort Studio | Diseño y Construcción de Terrazas",
+  title: "Comfort Studio | Arquitectura Atmosférica",
   description: "Especialistas en Outdoor Living, techos sol y sombra y arquitectura exterior en Perú.",
 };
 
@@ -26,23 +36,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className={montserrat.variable}>
-      <body>
-        {/* 1. Preloader Cinemático (Carga antes que nada) */}
+    <html lang="es" className={`${montserrat.variable} ${cormorant.variable}`}>
+      <body className="antialiased">
+        {/* Motor de Scroll Suave */}
+        <SmoothScroller />
+
+        {/* Preloader de Entrada */}
         <Preloader />
-        
-        {/* 2. FONDO ANIMADO (Estructura actualizada según el nuevo diseño) */}
+
+        {/* --- CAPA DE ATMÓSFERA (TEXTURA + FONDO) --- */}
+        {/* Ruido Fílmico (Noise) sobre toda la web */}
+        <div className="noise-overlay"></div>
+
+        {/* Fondo Arquitectónico */}
         <div className="bg-root">
           <div className="bg-grid"></div>
         </div>
-        
-        {/* 3. Contenido de la página */}
-        {children}
-        
-        {/* 4. Botón de Acción Flotante (WhatsApp) */}
+
+        {/* Contenido Principal */}
+        <div className="relative z-10">
+          {children}
+        </div>
+
+        {/* Botón Flotante */}
         <FloatingCTA />
 
-        {/* 5. Scripts de Analítica */}
+        {/* Scripts de Analítica */}
         {GA_ID && (
           <>
             <Script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
@@ -56,36 +75,6 @@ export default function RootLayout({
             </Script>
           </>
         )}
-      </body>
-    </html>
-  );
-}
-
-// ... imports anteriores ...
-import SmoothScroller from "@/components/SmoothScroller"; // <--- IMPORTAR AQUÍ
-
-// ... (resto de configuración metadata y fuentes)
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="es" className={montserrat.variable}>
-      <body>
-        <Preloader />
-        <SmoothScroller /> {/* <--- ACTIVAR EL MOTOR AQUÍ */}
-        
-        <div className="bg-root">
-          <div className="bg-grid"></div>
-        </div>
-        
-        {children}
-        
-        <FloatingCTA />
-
-        {/* ... Scripts de Analytics ... */}
       </body>
     </html>
   );

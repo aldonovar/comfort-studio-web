@@ -3,22 +3,20 @@
 @tailwind utilities;
 
 :root {
-  /* PALETA EXACTA DE TU PROPUESTA */
+  /* PALETA DE LUJO (Afinada) */
   --terracota: #b86f4b;
   --terracota-soft: #d28a5f;
-  --terracota-pale: #f3d3b7;
-  --sand: #f9f3ec;      /* Color Base */
-  --sand-soft: #f2e3d5;
-  --ink: #1e1713;       /* Texto Principal */
-  --ink-soft: #4d3d34;
-  --accent-gold: #f6c892;
+  --sand: #f9f3ec;
+  /* Arena Base */
+  --ink: #1e1713;
+  /* Negro Suave/Café */
   --white: #ffffff;
-  
-  /* Variables de Sistema */
-  --font-montserrat: var(--font-montserrat);
-  --radius-xl: 28px;
-  --radius-lg: 20px;
-  --nav-height: 120px;
+
+  /* SISTEMA TIPOGRÁFICO */
+  /* --font-sans viene de Montserrat (Next.js) */
+  /* --font-serif viene de Cormorant (Next.js) */
+  --font-body: var(--font-sans);
+  --font-display: var(--font-serif);
 }
 
 html {
@@ -28,18 +26,33 @@ html {
 body {
   background-color: var(--sand);
   color: var(--ink);
-  font-family: var(--font-montserrat), sans-serif;
+  font-family: var(--font-body), sans-serif;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* --- FONDO ANIMADO (Arquitectónico) --- */
+/* --- TEXTURA: RUIDO FÍLMICO (Noise) --- */
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+  /* Por encima de casi todo, pero debajo del menú si es necesario */
+  opacity: 0.04;
+  /* Sutil, apenas perceptible */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* --- FONDO ARQUITECTÓNICO --- */
 .bg-root {
   position: fixed;
   inset: 0;
-  z-index: -3;
+  z-index: -1;
   background: radial-gradient(circle at top left, #fdf7f1 0, #f4e3d4 40%, #ecd4c3 100%);
 }
 
@@ -47,8 +60,8 @@ body {
   position: absolute;
   inset: -40px;
   background-image:
-    linear-gradient(rgba(184,111,75,0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(184,111,75,0.06) 1px, transparent 1px);
+    linear-gradient(rgba(184, 111, 75, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(184, 111, 75, 0.06) 1px, transparent 1px);
   background-size: 80px 80px;
   mix-blend-mode: multiply;
   opacity: 0.5;
@@ -56,27 +69,38 @@ body {
 }
 
 @keyframes gridMove {
-  0% { transform: translate3d(0,0,0); }
-  100% { transform: translate3d(-40px,-40px,0); }
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  100% {
+    transform: translate3d(-40px, -40px, 0);
+  }
 }
 
-/* --- BOTONES ESTILO PROPUESTA --- */
+/* --- TIPOGRAFÍA UTILITIES --- */
+/* Úsala para títulos grandes: className="font-serif" */
+.font-serif {
+  font-family: var(--font-display), serif;
+}
+
+/* --- BOTONES --- */
 .btn-primary {
   background-color: var(--terracota);
   color: var(--white);
   padding: 0.8rem 2rem;
-  border-radius: 999px; /* Redondeado completo */
+  border-radius: 999px;
   font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
+  font-size: 0.75rem;
+  /* Más pequeño, más elegante */
+  letter-spacing: 2px;
   text-transform: uppercase;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   border: 1px solid var(--terracota);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  box-shadow: 0 4px 12px rgba(184, 111, 75, 0.2);
   cursor: pointer;
 }
 
@@ -93,8 +117,8 @@ body {
   padding: 0.8rem 2rem;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
   text-transform: uppercase;
   transition: all 0.3s ease;
   border: 1px solid var(--ink);
@@ -110,50 +134,18 @@ body {
   color: var(--terracota);
 }
 
-/* --- UTILIDADES --- */
-h1, h2, h3 { color: var(--ink); font-weight: 700; letter-spacing: -0.02em; }
-.text-accent { color: var(--terracota); }
-.container-safe { max-width: 1360px; margin: 0 auto; padding: 0 5%; }
-
-/* --- ANIMACIONES MENÚ AWWWARDS --- */
-@keyframes slide-up {
-  from { transform: translateY(100%); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+/* --- UTILIDADES GENERALES --- */
+.container-safe {
+  max-width: 1360px;
+  margin: 0 auto;
+  padding: 0 5%;
 }
 
-.animate-slide-up {
-  animation: slide-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-/* Efecto de texto hueco (Stroke) para el menú */
-.stroke-text {
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: rgba(255, 255, 255, 0.3);
-  transition: all 0.4s ease;
-}
-
-.stroke-text:hover {
-  -webkit-text-fill-color: #ffffff; /* Se rellena al pasar el mouse */
-  -webkit-text-stroke-color: #ffffff;
-  transform: translateX(20px); /* Desplazamiento elegante a la derecha */
-}
-
-/* Asegurar que el logo se invierta a blanco en fondos oscuros */
-.invert {
-  filter: invert(1) brightness(2);
-}
-
-/* --- ESTILOS DE FORMULARIO (Inputs Clean) --- */
-input:focus, textarea:focus, select:focus {
+/* Inputs Clean */
+input:focus,
+textarea:focus,
+select:focus {
   border-color: var(--terracota) !important;
   background-color: #ffffff !important;
   box-shadow: 0 0 0 2px rgba(184, 111, 75, 0.1);
-}
-
-/* Quitar estilo por defecto en móviles para inputs */
-input, textarea, select {
-  -webkit-appearance: none;
-  border-radius: 4px;
 }
