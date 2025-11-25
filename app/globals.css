@@ -3,28 +3,13 @@
 @tailwind utilities;
 
 :root {
-  /* --- PALETA DE IDENTIDAD COMFORT STUDIO --- */
+  /* PALETA DE IDENTIDAD */
   --terracota: #b86f4b;
   --terracota-soft: #d28a5f;
-  --terracota-pale: #f3d3b7;
-
-  /* Fondo Base (Arena/Crema) */
   --sand: #f9f3ec;
-  --sand-soft: #f2e3d5;
-
-  /* Texto Principal (Negro Suave) */
   --ink: #1e1713;
-  --ink-soft: #4d3d34;
-
-  /* Acentos */
-  --accent-gold: #f6c892;
   --white: #ffffff;
-
-  /* Variables de Sistema */
   --font-montserrat: var(--font-montserrat);
-  --radius-xl: 28px;
-  --radius-lg: 20px;
-  --nav-height: 120px;
 }
 
 html {
@@ -40,135 +25,61 @@ body {
   padding: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
-  /* Texto nítido en Mac */
-  -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- RESET CRÍTICO DE ENLACES (FIX AZUL) --- */
-/* Esto fuerza a que ningún enlace tenga el color azul por defecto del navegador */
+/* --- RESET DE ENLACES --- */
 a {
   text-decoration: none !important;
   color: inherit;
-  cursor: pointer;
 }
 
-a:visited,
-a:active,
-a:focus {
-  color: inherit;
-  text-decoration: none !important;
-}
+/* --- ESTILOS MENU "RIBBIT" --- */
 
-/* --- FONDO ANIMADO (ARQUITECTÓNICO) --- */
-.bg-root {
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  background: radial-gradient(circle at top left, #fdf7f1 0, #f4e3d4 40%, #ecd4c3 100%);
-}
-
-.bg-grid {
-  position: absolute;
-  inset: -40px;
-  background-image:
-    linear-gradient(rgba(184, 111, 75, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(184, 111, 75, 0.06) 1px, transparent 1px);
-  background-size: 80px 80px;
-  mix-blend-mode: multiply;
-  opacity: 0.5;
-  animation: gridMove 60s linear infinite;
-}
-
-@keyframes gridMove {
-  0% {
-    transform: translate3d(0, 0, 0);
-  }
-
-  100% {
-    transform: translate3d(-40px, -40px, 0);
-  }
-}
-
-/* --- NAVEGACIÓN: ESTILO "RIBBIT" / AWWWARDS --- */
-
-/* 1. Enlaces del Menú de Pantalla Completa (Mobile Overlay) */
-.menu-overlay-link {
+/* 1. Enlaces del Menú Overlay (Gigantes) */
+.menu-link-giant {
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 800;
-  /* Extra bold para impacto */
   text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #ffffff !important;
-  /* BLANCO SÓLIDO OBLIGATORIO */
+  letter-spacing: -1px;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
+  /* Borde sutil */
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  position: relative;
+  line-height: 1;
   display: block;
-  line-height: 1.2;
-}
-
-/* Estado Hover: Color Terracota y desplazamiento */
-.menu-overlay-link:hover {
-  color: var(--terracota) !important;
-  transform: translateX(20px);
-  /* Movimiento cinemático a la derecha */
-}
-
-/* 2. Enlaces del Menú Escritorio (Barra superior) */
-.nav-link-hover {
   position: relative;
-  display: inline-block;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 1.5px;
-  font-size: 0.8rem;
-  color: var(--ink);
-  transition: color 0.3s ease;
 }
 
-.nav-link-hover::after {
+/* Hover: Se rellena y se mueve */
+.menu-link-giant:hover {
+  color: #ffffff !important;
+  -webkit-text-stroke: 0px;
+  transform: translateX(10px);
+}
+
+/* 2. Enlace activo (Indicador) */
+.menu-link-giant::before {
   content: '';
   position: absolute;
+  left: -40px;
+  top: 50%;
   width: 0;
   height: 2px;
-  bottom: -4px;
-  left: 0;
   background-color: var(--terracota);
-  transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: width 0.3s ease;
 }
 
-.nav-link-hover:hover {
-  color: var(--terracota);
+.menu-link-giant:hover::before {
+  width: 30px;
 }
 
-.nav-link-hover:hover::after {
-  width: 100%;
-}
+/* --- ANIMACIONES --- */
 
-/* 3. Redes Sociales en el Menú */
-.social-link {
-  color: rgba(255, 255, 255, 0.6) !important;
-  /* Gris claro inicial */
-  font-size: 12px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  transition: all 0.3s ease;
-  padding: 5px 0;
-}
-
-.social-link:hover {
-  color: #ffffff !important;
-  /* Blanco puro al hover */
-  transform: translateY(-2px);
-}
-
-/* --- ANIMACIONES GENERALES --- */
-
-/* Slide Up para el menú */
+/* Slide Up para elementos del menú */
 @keyframes slideInUp {
   from {
     opacity: 0;
-    transform: translateY(60px);
+    transform: translateY(50px);
   }
 
   to {
@@ -177,141 +88,26 @@ a:focus {
   }
 }
 
-.nav-item-animate {
+.animate-slide-up {
   opacity: 0;
   /* Comienza invisible */
   animation: slideInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Fade In simple */
-.fade-in {
-  opacity: 0;
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-@keyframes fadeIn {
-  to {
-    opacity: 1;
-  }
-}
-
-/* --- ELEMENTOS DE INTERFAZ (UI) --- */
-
-/* Botones Principales (Rellenos) */
-.btn-primary {
-  background-color: var(--terracota);
-  color: var(--white) !important;
-  padding: 0.8rem 2rem;
-  border-radius: 999px;
-  /* Cápsula */
-  font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
-  border: 1px solid var(--terracota);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  box-shadow: 0 4px 12px rgba(184, 111, 75, 0.2);
-  cursor: pointer;
-  text-decoration: none !important;
-}
-
-.btn-primary:hover {
-  background-color: var(--ink);
-  border-color: var(--ink);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(30, 23, 19, 0.2);
-}
-
-/* Botones Secundarios (Borde) */
-.btn-outline {
-  background-color: transparent;
-  color: var(--ink) !important;
-  padding: 0.8rem 2rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.85rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
+/* --- BOTONES --- */
+.btn-cotizar {
   border: 1px solid var(--ink);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  text-decoration: none !important;
-}
-
-.btn-outline:hover {
-  background-color: rgba(30, 23, 19, 0.05);
-  border-color: var(--terracota);
-  color: var(--terracota) !important;
-}
-
-/* --- UTILIDADES DE TEXTO --- */
-h1,
-h2,
-h3 {
   color: var(--ink);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.text-accent {
-  color: var(--terracota);
-}
-
-/* --- CONTENEDORES Y ESPACIADO --- */
-.container-safe {
-  max-width: 1360px;
-  margin: 0 auto;
-  padding: 0 5%;
-}
-
-.section-padding {
-  padding: 6rem 0;
-}
-
-/* --- FORMULARIOS (Clean & Modern) --- */
-input,
-textarea,
-select {
-  -webkit-appearance: none;
-  border-radius: 4px;
-  background-color: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0.8rem 2rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
   transition: all 0.3s ease;
-  width: 100%;
-  font-family: var(--font-montserrat);
 }
 
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: var(--terracota) !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 0 3px rgba(184, 111, 75, 0.1);
-  outline: none;
-}
-
-/* --- SCROLLBAR PERSONALIZADO --- */
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--sand);
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: #dcdcdc;
-  border-radius: 4px;
-  border: 2px solid var(--sand);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--terracota);
+.btn-cotizar:hover {
+  background-color: var(--ink);
+  color: var(--white);
 }
