@@ -3,15 +3,15 @@
 @tailwind utilities;
 
 :root {
-  /* PALETA DE IDENTIDAD */
+  /* PALETA DE IDENTIDAD COMFORT STUDIO */
   --terracota: #b86f4b;
   --terracota-soft: #d28a5f;
   --terracota-pale: #f3d3b7;
   --sand: #f9f3ec;
-  /* Color Base */
+  /* Color Base (Arena/Crema) */
   --sand-soft: #f2e3d5;
   --ink: #1e1713;
-  /* Texto Principal */
+  /* Texto Principal (Negro Suave) */
   --ink-soft: #4d3d34;
   --accent-gold: #f6c892;
   --white: #ffffff;
@@ -25,6 +25,7 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 body {
@@ -37,55 +38,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* --- ESTILOS DE NAVEGACIÓN (Ribbit / Awwwards Style) --- */
-
-/* Reset básico para enlaces (Evita el azul predeterminado) */
+/* --- RESET DE ENLACES (CRÍTICO PARA EVITAR AZUL) --- */
 a {
-  text-decoration: none;
+  text-decoration: none !important;
   color: inherit;
-}
-
-/* Animación de entrada para los items del menú overlay */
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.nav-item-animate {
-  animation: slideInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  opacity: 0;
-  /* Invisible hasta que inicia la animación */
-}
-
-/* Hover creativo para enlaces del menú de escritorio */
-.nav-link-hover {
-  position: relative;
-  display: inline-block;
-  transition: color 0.3s ease;
-}
-
-.nav-link-hover::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 1px;
-  /* Línea fina y elegante */
-  bottom: -2px;
-  left: 0;
-  background-color: #b07357;
-  /* Terracota */
-  transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.nav-link-hover:hover::after {
-  width: 100%;
+  cursor: pointer;
 }
 
 /* --- FONDO ANIMADO (Arquitectónico) --- */
@@ -118,7 +75,96 @@ a {
   }
 }
 
-/* --- BOTONES (Estilo Propuesta) --- */
+/* --- NAVEGACIÓN: ESTILO "RIBBIT" / AWWWARDS --- */
+
+/* 1. Enlaces del Menú de Pantalla Completa (Texto Hueco) */
+.menu-overlay-link {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 800;
+  /* Extra bold para impacto */
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: transparent;
+  /* Texto transparente base */
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: rgba(255, 255, 255, 0.4);
+  /* Borde fino */
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  display: block;
+  line-height: 1.1;
+}
+
+/* Estado Hover: Relleno blanco y desplazamiento */
+.menu-overlay-link:hover {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff;
+  -webkit-text-stroke-width: 0px;
+  transform: translateX(20px);
+  /* Movimiento cinemático a la derecha */
+}
+
+/* 2. Enlaces del Menú Escritorio (Línea inferior) */
+.nav-link-hover {
+  position: relative;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.nav-link-hover::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #b07357;
+  /* Terracota */
+  transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-link-hover:hover::after {
+  width: 100%;
+}
+
+/* 3. Redes Sociales en el Menú */
+.social-link {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  transition: all 0.3s ease;
+  padding: 5px 0;
+}
+
+.social-link:hover {
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* --- ANIMACIONES --- */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.nav-item-animate {
+  opacity: 0;
+  animation: slideInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+/* --- UI ELEMENTS --- */
+
+/* Botones */
 .btn-primary {
   background-color: var(--terracota);
   color: var(--white);
@@ -169,7 +215,7 @@ a {
   color: var(--terracota);
 }
 
-/* --- UTILIDADES --- */
+/* Utilidades de Texto */
 h1,
 h2,
 h3 {
@@ -183,24 +229,46 @@ h3 {
 }
 
 .container-safe {
-  max-width: 1440px;
+  max-width: 1360px;
   margin: 0 auto;
   padding: 0 5%;
 }
 
-/* --- FORMULARIOS --- */
-input:focus,
-textarea:focus,
-select:focus {
-  border-color: var(--terracota) !important;
-  background-color: #ffffff !important;
-  box-shadow: 0 0 0 2px rgba(184, 111, 75, 0.1);
-}
-
-/* Quitar estilo por defecto en móviles para inputs */
+/* Formularios Clean */
 input,
 textarea,
 select {
   -webkit-appearance: none;
   border-radius: 4px;
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--terracota) !important;
+  background-color: #ffffff !important;
+  box-shadow: 0 0 0 3px rgba(184, 111, 75, 0.1);
+  outline: none;
+}
+
+/* Scrollbar Personalizado */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sand);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #dcdcdc;
+  border-radius: 4px;
+  border: 2px solid var(--sand);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--terracota);
 }
