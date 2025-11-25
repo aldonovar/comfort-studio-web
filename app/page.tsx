@@ -1,13 +1,12 @@
 "use client";
 
-import Hero from "@/components/Hero"; // Corregido: Sin llaves
-// Nota: Necesitas crear ScrollShowcase.tsx y exportarlo como default
+import Image from "next/image";
+import Hero from "@/components/Hero"; 
+// NOTA: Asume que ScrollShowcase.tsx existe y usa export default
 // import ScrollShowcase from "@/components/ScrollShowcase"; 
 
 export default function HomePage() {
   
-  // useLenis removido. Navbar, Preloader, PageTransition en layout.tsx
-
   return (
     <div className="page">
       <main>
@@ -121,7 +120,7 @@ export default function HomePage() {
           </section>
 
           {/* ============ COTIZA (SHOWCASE SCROLL) ============ */}
-          {/* Si quieres usar el componente ScrollShowcase, descomenta la siguiente línea y asegúrate de que el archivo ScrollShowcase.tsx exista en /components/ */}
+          {/* Si usas ScrollShowcase, descomenta la siguiente línea */}
           {/* <ScrollShowcase /> */}
 
           {/* ============ PROCESO (NOSOTROS/EXPERIENCIA) ============ */}
