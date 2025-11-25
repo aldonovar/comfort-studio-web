@@ -3,82 +3,98 @@
 @tailwind utilities;
 
 :root {
-  /* PALETA DE COLORES */
-  --terracota: #b86f4b;
-  --terracota-hover: #9a5b3d;
+  /* --- PALETA COMFORT STUDIO (Extaída de tu logo) --- */
+  --terracota: #b07357;
+  --terracota-dark: #8a5a44;
   --sand: #f9f3ec;
+  /* Fondo Crema */
   --ink: #1e1713;
+  /* Negro Café (Lujo) */
   --white: #ffffff;
 
-  /* CONFIGURACIÓN */
-  --font-montserrat: var(--font-montserrat);
-  --nav-height: 90px;
+  /* Configuración de Fuentes (Next.js) */
+  --font-montserrat: var(--font-sans);
+  --font-serif: var(--font-serif);
 }
 
-html,
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
 body {
-  scroll-behavior: smooth;
   background-color: var(--sand);
   color: var(--ink);
   font-family: var(--font-montserrat), sans-serif;
-  /* Asegura la fuente */
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* --- ESTILOS DE NAVEGACIÓN --- */
-.nav-link {
-  position: relative;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-size: 0.85rem;
-  color: var(--ink);
-  transition: color 0.3s ease;
+/* --- RESET CRÍTICO (Arregla enlaces azules y botones rotos) --- */
+a {
+  text-decoration: none;
+  color: inherit;
 }
 
-.nav-link::after {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 1px;
-  bottom: -4px;
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+/* --- TEXTURA DE RUIDO (Estilo Film/Papel) --- */
+.noise-overlay {
+  position: fixed;
+  top: 0;
   left: 0;
-  background-color: var(--terracota);
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover {
-  color: var(--terracota);
-}
-
-.nav-link:hover::after {
   width: 100%;
+  height: 100%;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-/* --- BOTONES --- */
+/* --- ESTILOS DE BOTONES (Sólidos y Elegantes) --- */
 .btn-primary {
   background-color: var(--terracota);
   color: var(--white);
   padding: 1rem 2.5rem;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   border: 1px solid var(--terracota);
-  display: inline-block;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-primary:hover {
   background-color: var(--ink);
   border-color: var(--ink);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(30, 23, 19, 0.15);
 }
 
 .btn-outline {
@@ -87,30 +103,29 @@ body {
   padding: 1rem 2.5rem;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  letter-spacing: 2px;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
   border: 1px solid var(--ink);
-  display: inline-block;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .btn-outline:hover {
-  background-color: rgba(30, 23, 19, 0.05);
-  border-color: var(--terracota);
-  color: var(--terracota);
+  background-color: var(--ink);
+  color: var(--white);
+  transform: translateY(-3px);
 }
 
-/* --- UTILIDADES --- */
-.container-safe {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 5%;
+/* --- UTILIDADES DE TIPOGRAFÍA --- */
+.font-display {
+  font-family: var(--font-serif), serif;
 }
 
-/* Ajuste para asegurar que las imágenes no rompan el layout */
-img {
-  max-width: 100%;
-  height: auto;
+.hero-title {
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
 }

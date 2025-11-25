@@ -1,7 +1,6 @@
 'use client';
-
-import { useScrollReveal } from '@/hooks/useScrollReveal';
 import Image from 'next/image';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 export default function Hero() {
   const revealRef = useScrollReveal();
@@ -9,50 +8,53 @@ export default function Hero() {
   return (
     <section
       id="inicio"
-      className="relative min-h-screen flex items-center pt-[100px] pb-10 overflow-hidden"
-      ref={revealRef}
+      className="relative w-full min-h-screen flex items-center pt-[120px] pb-[50px] overflow-hidden"
     >
-      {/* 1. IMAGEN DE FONDO (Correctamente posicionada) */}
-      <div className="absolute top-0 left-0 w-full h-full -z-10">
+      {/* 1. FONDO INMERSIVO */}
+      <div className="absolute inset-0 z-0">
         <Image
-          src="https://images.unsplash.com/photo-1631679706909-1844bbd07221?q=80&w=1992&auto=format&fit=crop"
-          alt="Terraza de Lujo Comfort Studio"
+          src="https://images.unsplash.com/photo-1600585154340-0ef3c08c0632?q=80&w=2070&auto=format&fit=crop" // Imagen de arquitectura de lujo
+          alt="Comfort Studio Terraza"
           fill
           className="object-cover object-center"
           priority
         />
-        {/* Gradiente suave para mejorar lectura del texto */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#faf8f1]/90 via-[#faf8f1]/70 to-transparent"></div>
+        {/* Gradiente de legibilidad (Cream fade from left) */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#f9f3ec] via-[#f9f3ec]/70 to-transparent md:via-[#f9f3ec]/40"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#f9f3ec] via-transparent to-transparent h-[20%] bottom-0"></div>
       </div>
 
       {/* 2. CONTENIDO */}
-      <div className="container-safe w-full relative z-10">
-        <div className="max-w-2xl">
+      <div ref={revealRef} className="container-safe relative z-10 w-full px-[5%]">
+        <div className="max-w-3xl flex flex-col justify-center h-full">
 
-          {/* Eyebrow */}
-          <div className="text-[#b07357] font-bold tracking-[4px] mb-6 text-xs uppercase font-sans">
-            ARQUITECTURA & OUTDOOR LIVING
+          {/* Etiqueta Superior */}
+          <div className="flex items-center gap-4 mb-6">
+            <span className="h-[1px] w-12 bg-[#b07357]"></span>
+            <span className="text-[#b07357] font-bold tracking-[0.25em] text-xs uppercase">
+              Arquitectura Exterior
+            </span>
           </div>
 
-          {/* Título */}
-          <h1 className="text-[#1e1713] text-5xl md:text-7xl font-bold leading-[1.1] mb-8 font-sans">
-            Espacios que <br />
-            <span className="text-[#b07357] italic font-serif">elevan tu vida.</span>
+          {/* Título Gigante */}
+          <h1 className="hero-title text-[#1e1713] font-sans font-bold mb-6">
+            Diseño que <br />
+            <span className="font-display italic font-normal text-[#b07357]">redefine tu hogar.</span>
           </h1>
 
-          {/* Subtítulo */}
-          <p className="text-[#4a4a4a] text-lg leading-relaxed mb-10 max-w-lg font-medium">
-            Transformamos azoteas en refugios de lujo. Diseño bioclimático,
-            acabados premium y una ejecución impecable.
+          {/* Descripción */}
+          <p className="text-[#4d3d34] text-lg leading-relaxed mb-10 max-w-[500px] font-light">
+            Especialistas en techos sol y sombra, zonas de parrilla y espacios bioclimáticos.
+            Llevamos la sofisticación del interior al aire libre.
           </p>
 
-          {/* BOTONES (Arreglados) */}
-          <div className="flex flex-col sm:flex-row gap-4">
+          {/* Botones (Container Flex Seguro) */}
+          <div className="flex flex-wrap gap-4 items-center">
             <a href="#portafolio" className="btn-primary">
-              VER PROYECTOS
+              Ver Portafolio
             </a>
             <a href="#contacto" className="btn-outline">
-              AGENDAR CITA
+              Agendar Visita
             </a>
           </div>
 

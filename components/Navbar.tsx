@@ -4,104 +4,110 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 const MENU_ITEMS = [
-  { label: 'INICIO', href: '#inicio' },
-  { label: 'SERVICIOS', href: '#servicios' },
-  { label: 'PROYECTOS', href: '#portafolio' },
-  { label: 'EXPERIENCIA', href: '#experiencia' },
-  { label: 'CONTACTO', href: '#contacto' },
+  { label: 'Experiencia', href: '#experiencia' },
+  { label: 'Servicios', href: '#servicios' },
+  { label: 'Proyectos', href: '#portafolio' },
 ];
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
+    const handleScroll = () => setIsScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Bloquear scroll body al abrir menú
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? 'hidden' : 'auto';
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = menuOpen ? 'hidden' : 'auto';
+    }
   }, [menuOpen]);
 
   return (
     <>
-      {/* BARRA DE NAVEGACIÓN */}
+      {/* --- BARRA DE NAVEGACIÓN --- */}
       <header
-        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'py-4 bg-[#faf8f1]/95 backdrop-blur-md shadow-sm' : 'py-8 bg-transparent'
+        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${isScrolled ? 'py-4' : 'py-8'
           }`}
       >
-        <div className="container-safe flex justify-between items-center">
-
-          {/* 1. LOGO */}
-          <Link href="/" className="flex items-center gap-3 relative z-[102]" onClick={() => setMenuOpen(false)}>
-            {/* Contenedor rígido para el logo para evitar que desaparezca */}
-            <div className="relative w-[50px] h-[50px]">
-              <Image
-                src="/logo.png"
-                alt="Comfort Studio Logo"
-                fill
-                className="object-contain"
-                priority
-                sizes="50px"
-              />
-            </div>
-            <div className="flex flex-col leading-tight">
-              <span className="font-bold text-[#b07357] text-sm tracking-[2px]">COMFORT</span>
-              <span className="font-light text-[#1e1713] text-xs tracking-[3px]">STUDIO</span>
-            </div>
-          </Link>
-
-          {/* 2. MENÚ ESCRITORIO */}
-          <nav className="hidden lg:flex items-center gap-8">
-            {MENU_ITEMS.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                className="nav-link"
-              >
-                {item.label}
-              </Link>
-            ))}
-            <Link href="#contacto" className="btn-primary !py-3 !px-6 !text-xs">
-              COTIZAR
-            </Link>
-          </nav>
-
-          {/* 3. BOTÓN HAMBURGUESA (MÓVIL) */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="lg:hidden relative z-[102] w-10 h-10 flex flex-col justify-center items-end gap-1.5"
+        <div className="container-safe flex justify-center px-[5%]">
+          <div
+            className={`flex justify-between items-center w-full transition-all duration-500 ${isScrolled
+                ? 'bg-[#f9f3ec]/80 backdrop-blur-xl border border-white/40 shadow-sm rounded-full px-8 py-3 max-w-6xl mx-auto'
+                : 'bg-transparent px-0 max-w-full'
+              }`}
           >
-            <span className={`h-[2px] bg-[#1e1713] transition-all duration-300 ${menuOpen ? 'w-6 rotate-45 translate-y-2' : 'w-8'}`} />
-            <span className={`h-[2px] bg-[#1e1713] transition-all duration-300 ${menuOpen ? 'opacity-0' : 'w-6'}`} />
-            <span className={`h-[2px] bg-[#1e1713] transition-all duration-300 ${menuOpen ? 'w-6 -rotate-45 -translate-y-2' : 'w-4'}`} />
-          </button>
+            {/* LOGO */}
+            <Link href="/" className="relative z-[102] flex flex-col leading-none group" onClick={() => setMenuOpen(false)}>
+              <span className="font-display font-bold text-xl tracking-wide text-[#1e1713]">COMFORT</span>
+              <span className="font-sans text-[0.6rem] tracking-[0.3em] text-[#b07357]">STUDIO</span>
+            </Link>
+
+            {/* MENÚ ESCRITORIO */}
+            <nav className="hidden md:flex items-center gap-10">
+              {MENU_ITEMS.map((item) => (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="text-xs font-bold uppercase tracking-[2px] text-[#1e1713] hover:text-[#b07357] transition-colors relative group"
+                >
+                  {item.label}
+                  <span className="absolute -bottom-1 left-0 w-0 h-[1px] bg-[#b07357] transition-all duration-300 group-hover:w-full"></span>
+                </Link>
+              ))}
+            </nav>
+
+            {/* ACCIONES DERECHA */}
+            <div className="flex items-center gap-4 relative z-[102]">
+              <Link
+                href="#contacto"
+                className={`hidden sm:inline-flex btn-primary !py-3 !px-6 !text-[0.7rem] ${isScrolled ? '!bg-[#1e1713] text-white' : ''}`}
+              >
+                Cotizar
+              </Link>
+
+              {/* HAMBURGUESA (Visible siempre en móvil, oculta en desktop si no quieres menú extra) */}
+              <button
+                onClick={() => setMenuOpen(!menuOpen)}
+                className="md:hidden w-12 h-12 rounded-full border border-[#1e1713]/10 flex flex-col items-center justify-center gap-[5px] hover:bg-[#1e1713] group transition-all duration-300 bg-white/50 backdrop-blur-sm"
+              >
+                <span className={`w-5 h-[1.5px] bg-[#1e1713] transition-all duration-300 group-hover:bg-[#f9f3ec] ${menuOpen ? 'rotate-45 translate-y-[6px]' : ''}`} />
+                <span className={`w-5 h-[1.5px] bg-[#1e1713] transition-all duration-300 group-hover:bg-[#f9f3ec] ${menuOpen ? 'opacity-0' : ''}`} />
+                <span className={`w-5 h-[1.5px] bg-[#1e1713] transition-all duration-300 group-hover:bg-[#f9f3ec] ${menuOpen ? '-rotate-45 -translate-y-[7px]' : ''}`} />
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* MENÚ MÓVIL (OVERLAY) */}
+      {/* --- OVERLAY MENÚ MÓVIL (Negro Elegante) --- */}
       <div
-        className={`fixed inset-0 bg-[#faf8f1] z-[101] flex flex-col justify-center items-center transition-transform duration-500 ease-in-out ${menuOpen ? 'translate-y-0' : '-translate-y-full'
+        className={`fixed inset-0 z-[99] bg-[#111111] flex flex-col justify-center items-center transition-transform duration-700 cubic-bezier(0.83, 0, 0.17, 1) ${menuOpen ? 'translate-y-0' : '-translate-y-full'
           }`}
       >
         <nav className="flex flex-col items-center gap-8">
-          {MENU_ITEMS.map((item) => (
+          {MENU_ITEMS.map((item, index) => (
             <Link
               key={item.label}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              className="text-3xl font-bold text-[#1e1713] uppercase tracking-widest hover:text-[#b07357] transition-colors"
+              className={`text-4xl md:text-6xl font-display italic text-white hover:text-[#b07357] transition-colors duration-300 ${menuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
+                }`}
+              style={{ transitionDelay: `${index * 100 + 200}ms` }}
             >
               {item.label}
             </Link>
           ))}
-          <div className="mt-8">
-            <Link href="#contacto" onClick={() => setMenuOpen(false)} className="btn-primary">
-              AGENDAR CITA
-            </Link>
-          </div>
+          <Link
+            href="#contacto"
+            onClick={() => setMenuOpen(false)}
+            className="mt-8 px-8 py-4 border border-white/20 rounded-full text-white uppercase tracking-widest text-sm hover:bg-white hover:text-black transition-all"
+          >
+            Iniciar Proyecto
+          </Link>
         </nav>
       </div>
     </>
