@@ -1,33 +1,53 @@
-// app/layout.tsx
 import type { Metadata } from "next";
+import { Montserrat, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
-import { Space_Grotesk, DM_Sans } from "next/font/google";
+import Preloader from "@/components/Preloader";
+import SmoothScroller from "@/components/SmoothScroller";
+import PageTransition from "@/components/PageTransition";
+import FloatingCTA from "@/components/FloatingCTA";
 
-const spaceGrotesk = Space_Grotesk({
+const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-space-grotesk",
+  variable: "--font-sans",
+  display: "swap",
 });
 
-const dmSans = DM_Sans({
+const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-dm-sans",
+  variable: "--font-serif",
+  weight: ["300", "400", "600"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Comfort Studio — Arquitectura exterior que se siente hogar",
-  description:
-    "Comfort Studio diseña y construye terrazas, azoteas y espacios exteriores que se sienten hogar. Arquitectura, diseño y ejecución llave en mano en Lima.",
+  title: "Comfort Studio | Outdoor Living",
+  description: "Arquitectura de terrazas de lujo.",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="es">
-      <body className={`${spaceGrotesk.variable} ${dmSans.variable}`}>
-        {children}
+    <html lang="es" className={`${montserrat.variable} ${cormorant.variable}`}>
+      <body className="antialiased bg-[#f9f3ec] text-[#1e1713]">
+        {/* 1. Motor de Scroll */}
+        <SmoothScroller />
+        
+        {/* 2. Transición de Página (Cortina) */}
+        <PageTransition />
+        
+        {/* 3. Ruido Visual */}
+        <div className="noise-overlay"></div>
+
+        {/* 4. Contenido */}
+        <div className="relative z-10">
+          {children}
+        </div>
+
+        {/* 5. Floating CTA */}
+        <FloatingCTA />
       </body>
     </html>
   );
