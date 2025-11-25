@@ -3,18 +3,17 @@
 @tailwind utilities;
 
 :root {
-  /* --- PALETA SIGNATURE --- */
+  /* --- PALETA SIGNATURE (Tierra & Lujo) --- */
   --terracota: #b07357;
-  --ink: #1e1713;       /* Negro Café (Texto Principal) */
-  --sand: #f9f3ec;      /* Fondo Crema */
+  --ink: #1e1713;       /* Negro Café Profundo (Texto Principal) */
+  --sand: #f9f3ec;      /* Crema Base (Fondo) */
   --white: #ffffff;
   
-  /* --- CAPAS (Z-INDEX) - ESTO ES CRÍTICO --- */
+  /* --- CAPAS (Z-INDEX MAESTRO) - CRÍTICO PARA VISIBILIDAD --- */
   --z-noise: 50;
   --z-content: 100;
-  --z-navbar: 1000;
-  --z-overlay: 2000;
-  --z-cursor: 9999;
+  --z-navbar: 9999;      /* Navbar y Botón Flotante siempre encima */
+  --z-overlay: 10000;    /* Menú Móvil Overlay */
 
   /* --- ANIMACIONES (Ribbit Feel) --- */
   --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
@@ -29,14 +28,18 @@ html.lenis, html.lenis body { height: auto; }
 body {
   background-color: var(--sand);
   color: var(--ink);
+  /* Las fuentes se definen en layout.tsx y se usan en los componentes */
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Reset de enlaces para evitar colores azules */
-a { text-decoration: none; color: inherit; }
+/* Reset agresivo para evitar enlaces azules y asegurar estilos */
+a { 
+  text-decoration: none !important; 
+  color: inherit !important; 
+}
 
 /* --- UTILIDADES VISUALES --- */
 .noise-overlay {
@@ -53,4 +56,21 @@ a { text-decoration: none; color: inherit; }
   max-width: 1600px;
   margin: 0 auto;
   padding: 0 4vw;
+}
+
+/* Estilos para el Footer (de la versión compleja) */
+.site-footer {
+  background-color: var(--ink);
+  color: var(--white);
+  padding: 3rem 4vw;
+}
+
+.site-footer-inner {
+  max-width: 1600px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  opacity: 0.6;
 }

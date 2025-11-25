@@ -1,27 +1,31 @@
 import type { Metadata } from "next";
 import { Montserrat, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
-import Preloader from "@/components/Preloader";
 import SmoothScroller from "@/components/SmoothScroller";
 import PageTransition from "@/components/PageTransition";
+import Navbar from "@/components/Navbar";
 import FloatingCTA from "@/components/FloatingCTA";
+import Preloader from "@/components/Preloader"; // Añadido para la carga inicial
 
+// --- CONFIGURACIÓN TIPOGRÁFICA "PAREJA DE PODER" ---
 const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-serif",
-  weight: ["300", "400", "600"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
-  title: "Comfort Studio | Outdoor Living",
-  description: "Arquitectura de terrazas de lujo.",
+  title: "Comfort Studio | Arquitectura & Outdoor Living",
+  description: "Especialistas en diseño y construcción de terrazas de lujo, techos sol y sombra y espacios bioclimáticos en Perú.",
 };
 
 export default function RootLayout({
@@ -32,22 +36,24 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${montserrat.variable} ${cormorant.variable}`}>
       <body className="antialiased bg-[#f9f3ec] text-[#1e1713]">
-        {/* 1. Motor de Scroll */}
-        <SmoothScroller />
         
-        {/* 2. Transición de Página (Cortina) */}
+        {/* 1. MOTORES DE FLUIDEZ Y CARGA */}
+        <SmoothScroller />
+        <Preloader />
         <PageTransition />
         
-        {/* 3. Ruido Visual */}
+        {/* 2. TEXTURA Y ATMÓSFERA */}
         <div className="noise-overlay"></div>
 
-        {/* 4. Contenido */}
+        {/* 3. ELEMENTOS FIJOS (Visibilidad Asegurada con z-index alto) */}
+        <Navbar />
+        <FloatingCTA />
+
+        {/* 4. CONTENIDO DINÁMICO DE LAS PÁGINAS */}
         <div className="relative z-10">
           {children}
         </div>
 
-        {/* 5. Floating CTA */}
-        <FloatingCTA />
       </body>
     </html>
   );
