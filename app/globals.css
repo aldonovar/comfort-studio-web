@@ -3,180 +3,114 @@
 @tailwind utilities;
 
 :root {
-  /* PALETA DE IDENTIDAD */
+  /* PALETA DE COLORES */
   --terracota: #b86f4b;
-  --terracota-soft: #d28a5f;
+  --terracota-hover: #9a5b3d;
   --sand: #f9f3ec;
   --ink: #1e1713;
   --white: #ffffff;
+
+  /* CONFIGURACIÓN */
   --font-montserrat: var(--font-montserrat);
+  --nav-height: 90px;
 }
 
-html {
-  scroll-behavior: smooth;
-  height: 100%;
-}
-
+html,
 body {
+  scroll-behavior: smooth;
   background-color: var(--sand);
   color: var(--ink);
   font-family: var(--font-montserrat), sans-serif;
+  /* Asegura la fuente */
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
 
-/* --- RESET DE ENLACES --- */
-a {
-  text-decoration: none !important;
-  color: inherit;
-}
-
-/* --- ESTILOS MENU "RIBBIT" --- */
-
-/* 1. Enlaces del Menú Overlay (Gigantes) */
-.menu-link-giant {
-  font-family: var(--font-montserrat), sans-serif;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: -1px;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
-  /* Borde sutil */
-  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-  line-height: 1;
-  display: block;
+/* --- ESTILOS DE NAVEGACIÓN --- */
+.nav-link {
   position: relative;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+  color: var(--ink);
+  transition: color 0.3s ease;
 }
 
-/* Hover: Se rellena y se mueve */
-.menu-link-giant:hover {
-  color: #ffffff !important;
-  -webkit-text-stroke: 0px;
-  transform: translateX(10px);
-}
-
-/* 2. Enlace activo (Indicador) */
-.menu-link-giant::before {
+.nav-link::after {
   content: '';
   position: absolute;
-  left: -40px;
-  top: 50%;
   width: 0;
-  height: 2px;
+  height: 1px;
+  bottom: -4px;
+  left: 0;
   background-color: var(--terracota);
   transition: width 0.3s ease;
 }
 
-.menu-link-giant:hover::before {
-  width: 30px;
+.nav-link:hover {
+  color: var(--terracota);
 }
 
-/* --- ANIMACIONES --- */
-
-/* Slide Up para elementos del menú */
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(50px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slide-up {
-  opacity: 0;
-  /* Comienza invisible */
-  animation: slideInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.nav-link:hover::after {
+  width: 100%;
 }
 
 /* --- BOTONES --- */
-.btn-cotizar {
-  border: 1px solid var(--ink);
-  color: var(--ink);
-  padding: 0.8rem 2rem;
+.btn-primary {
+  background-color: var(--terracota);
+  color: var(--white);
+  padding: 1rem 2.5rem;
   border-radius: 999px;
   font-weight: 600;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   transition: all 0.3s ease;
+  border: 1px solid var(--terracota);
+  display: inline-block;
+  text-align: center;
 }
 
-.btn-cotizar:hover {
+.btn-primary:hover {
   background-color: var(--ink);
-  color: var(--white);
+  border-color: var(--ink);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-/* --- ANIMACIONES AVANZADAS NAVBAR --- */
-
-/* Efecto de aparición suave para el Mega Menú */
-@keyframes slideDownFade {
-  from {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.98);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.btn-outline {
+  background-color: transparent;
+  color: var(--ink);
+  padding: 1rem 2.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  transition: all 0.3s ease;
+  border: 1px solid var(--ink);
+  display: inline-block;
+  text-align: center;
 }
 
-.animate-mega-menu {
-  animation: slideDownFade 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+.btn-outline:hover {
+  background-color: rgba(30, 23, 19, 0.05);
+  border-color: var(--terracota);
+  color: var(--terracota);
 }
 
-/* Efecto de video revelado */
-@keyframes revealVideo {
-  from {
-    opacity: 0;
-    filter: blur(10px);
-  }
-
-  to {
-    opacity: 1;
-    filter: blur(0);
-  }
+/* --- UTILIDADES --- */
+.container-safe {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 5%;
 }
 
-.video-reveal {
-  animation: revealVideo 0.6s ease-out forwards;
-}
-
-/* Hover magnético en textos */
-.hover-underline-animation {
-  position: relative;
-}
-
-.hover-underline-animation::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 1px;
-  bottom: 0;
-  left: 0;
-  background-color: var(--terracota);
-  transform-origin: bottom right;
-  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.hover-underline-animation:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
-
-/* Scrollbar oculta para el menú móvil si es muy largo */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+/* Ajuste para asegurar que las imágenes no rompan el layout */
+img {
+  max-width: 100%;
+  height: auto;
 }
