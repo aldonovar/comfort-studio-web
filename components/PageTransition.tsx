@@ -1,27 +1,30 @@
-'use client';
-import { useEffect, useRef } from 'react';
-import gsap from 'gsap';
+"use client";
 
-export default function PageTransition() {
-  const curtainRef = useRef(null);
+import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+import styles from "./PageTransition.module.css";
 
-  useEffect(() => {
-    const tl = gsap.timeline();
-    // La cortina sube revelando la web
-    tl.to(curtainRef.current, {
-      height: '0%',
-      duration: 1.5,
-      ease: 'power4.inOut',
-      delay: 0.2
-    });
-  }, []);
+export function PageTransition({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
 
   return (
-    <div 
-      ref={curtainRef}
-      className="fixed top-0 left-0 w-full h-screen bg-[#1e1713] z-[99999] flex items-center justify-center overflow-hidden"
-    >
-      {/* Opcional: Aquí podrías poner un texto de carga pequeño */}
-    </div>
+    <>
+      <div className={styles.overlay}>
+        <div className={`${styles.panel} ${styles.left}`} />
+        <div className={`${styles.panel} ${styles.right}`} />
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={pathname}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -24 }}
+          transition={{ duration: 0.6, ease: [0.2, 0.75, 0.24, 1] }}
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </>
   );
 }
