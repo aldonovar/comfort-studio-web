@@ -1,40 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
-// import styles from "./Preloader.module.css"; // Usa estilos en línea por ahora si la ruta del módulo es un problema
+import { AnimatePresence, motion } from "framer-motion";
+import { usePathname } from "next/navigation";
+import styles from "./PageTransition.module.css"; // Asegúrate de que exista o comenta
 
-// CORRECCIÓN CLAVE: Usamos 'export default' para coincidir con app/layout.tsx
-export default function Preloader() { 
-  const [hidden, setHidden] = useState(false);
-
-  useEffect(() => {
-    // Pensado más como transición de entrada que como carga real
-    const timeout = setTimeout(() => setHidden(true), 700);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  if (hidden) return null;
+export default function PageTransition({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
 
   return (
-    <div 
-      style={{
-        position: 'fixed',
-        inset: 0,
-        zIndex: 10000,
-        backgroundColor: '#1e1713',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        color: '#f9f3ec',
-        opacity: 1, // La opacidad se gestiona con el estado 'hidden'
-        transition: 'opacity 0.7s ease',
-      }}
-    >
-      <p style={{
-        fontSize: '0.9rem',
-        letterSpacing: '0.2em',
-        textTransform: 'uppercase',
-      }}>Loading Signature Experience...</p>
-    </div>
+    <>
+      {/* Si tienes estilos para la cortina, úsalos aquí. Si no, este div vacío no molesta. */}
+      <div className={styles?.overlay} style={{ pointerEvents: 'none' }}>
+      </div>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={pathname}
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -24 }}
+          transition={{ duration: 0.6, ease: [0.2, 0.75, 0.24, 1] }}
+        >
+          {children}
+        </motion.div>
+      </AnimatePresence>
+    </>
   );
 }

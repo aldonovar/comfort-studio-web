@@ -3,9 +3,9 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
-import styles from "./ScrollShowcase.module.css";
+// import styles from "./ScrollShowcase.module.css"; // Descomenta si tienes los estilos
 
-export function ScrollShowcase() {
+export default function ScrollShowcase() {
   const ref = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -17,64 +17,33 @@ export function ScrollShowcase() {
   const scale = useTransform(scrollYProgress, [0, 1], [0.95, 1.03]);
 
   return (
-    <section id="cotiza" className={styles.section} ref={ref}>
-      <div className={styles.inner}>
-        <div className={styles.textColumn}>
-          <p className={styles.label}>Cotización guiada</p>
-          <h2 className={styles.title}>
+    <section id="cotiza" ref={ref} className="py-20 bg-[#f4ebe4] overflow-hidden">
+      <div className="container-safe grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <p className="text-[#b07357] font-bold tracking-[0.25em] text-xs uppercase mb-2">Cotización guiada</p>
+          <h2 className="text-4xl font-serif text-[#1e1713] mb-4">
             Una sola sección para entender tu terraza
-            <span className={styles.titleAccent}> y empezar el proyecto.</span>
+            <span className="text-[#b07357]"> y empezar el proyecto.</span>
           </h2>
-          <p className={styles.lede}>
+          <p className="text-lg text-[#1e1713]/80 mb-8">
             En lugar de un formulario frío, esta sección acompaña al visitante
-            paso a paso: tipo de espacio, uso principal, metraje aproximado y
-            nivel de inversión esperado. Todo mientras la terraza se mantiene
-            presente al centro, como en un showcase de producto.
+            paso a paso.
           </p>
-
-          <ol className={styles.steps}>
-            <li>
-              <span>01</span>
-              <div>
-                <h3>Definimos el espacio</h3>
-                <p>Terraza de departamento, azotea completa, patio interior o corporativo.</p>
-              </div>
-            </li>
-            <li>
-              <span>02</span>
-              <div>
-                <h3>Conocemos el uso</h3>
-                <p>Reuniones, parrillas, lectura, trabajo remoto o eventos frecuentes.</p>
-              </div>
-            </li>
-            <li>
-              <span>03</span>
-              <div>
-                <h3>Alineamos inversión</h3>
-                <p>Rangos claros para proponer soluciones honestas desde el inicio.</p>
-              </div>
-            </li>
-          </ol>
-
-          <a href="#contacto" className={styles.cta}>
+          
+          <a href="#contacto" className="inline-block border-b border-[#b07357] text-[#1e1713] uppercase tracking-widest text-xs pb-1 hover:text-[#b07357]">
             Quiero empezar mi cotización →
           </a>
         </div>
 
-        <div className={styles.visualColumn}>
+        <div className="relative min-h-[400px] flex justify-center items-center">
           <motion.div
-            className={styles.device}
             style={{ rotateZ: rotate, y, scale }}
+            className="relative w-full max-w-md aspect-[3/4] shadow-2xl rounded-lg overflow-hidden"
           >
-            <div className={styles.deviceInner}>
-              <Image
-                src="https://images.pexels.com/photos/3965545/pexels-photo-3965545.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt="Render de terraza Comfort Studio"
-                fill
-                style={{ objectFit: "cover" }}
-              />
-            </div>
-            <div className={styles.deviceShadow} />
+             <div className="bg-gray-200 w-full h-full flex items-center justify-center text-gray-500">
+                {/* Placeholder de imagen si no carga la externa */}
+                Render de Terraza
+             </div>
           </motion.div>
         </div>
       </div>

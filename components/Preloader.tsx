@@ -1,9 +1,8 @@
 "use client";
 import { useEffect, useState } from "react";
-import styles from "./Preloader.module.css";
+import styles from "./Preloader.module.css"; // Asegúrate de que este archivo exista, si no, comenta esta línea.
 
-// CORRECCIÓN: Usamos export default para ser compatible con layout.tsx
-export default function Preloader() { 
+export default function Preloader() {
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
@@ -14,12 +13,10 @@ export default function Preloader() {
   if (hidden) return null;
 
   return (
-    <div className={styles.preloader}>
-      <div className={styles.inner}>
-        <div className={styles.dot} />
-        <div className={styles.dot} />
-        <div className={styles.dot} />
-        <p className={styles.text}>Entrando a Comfort Studio…</p>
+    // Si no tienes el CSS module, cambia className={styles.preloader} por style={{...}}
+    <div className={styles?.preloader || "fixed inset-0 z-[9999] bg-[#1e1713] flex items-center justify-center"}>
+      <div className={styles?.inner || "flex flex-col items-center gap-2 text-[#f9f3ec]"}>
+        <p className={styles?.text || "text-sm tracking-widest uppercase"}>Loading...</p>
       </div>
     </div>
   );
