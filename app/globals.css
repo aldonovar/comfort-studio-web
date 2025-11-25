@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* PALETA PREMIUM */
+  --terracota: #b07357;
+  --ink: #0a0a0a; /* Negro casi absoluto para máximo contraste */
+  --sand: #f5f2eb; /* Crema cálido estilo papel */
+  --white: #ffffff;
+  
+  /* CAPAS Z-INDEX (JERARQUÍA ABSOLUTA) */
+  --z-negative: -1;
+  --z-base: 10;
+  --z-content: 50;
+  --z-nav: 100;
+  --z-overlay: 999;
+  --z-loader: 1000;
+}
+
+/* Reset agresivo */
+* { box-sizing: border-box; }
+
+body {
+  background-color: var(--sand);
+  color: var(--ink);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* TIPOGRAFÍA GIGANTE (Estilo Ribbit/Brandigo) */
+.font-display {
+  font-family: var(--font-serif);
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+/* BOTONES DE AUTOR */
+.btn-primary {
+  background-color: var(--ink);
+  color: var(--white);
+  padding: 1.2rem 3rem;
+  border-radius: 0; /* Bordes rectos = Arquitectura */
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid var(--ink);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary:hover {
+  background-color: transparent;
+  color: var(--ink);
+}
+
+/* INPUTS LIMPIOS */
+input, select, textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(10,10,10, 0.2);
+  padding: 1rem 0;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-bottom-color: var(--terracota);
+}
+
+/* RUIDO VISUAL */
+.noise {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
