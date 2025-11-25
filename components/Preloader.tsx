@@ -1,13 +1,12 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import styles from "./Preloader.module.css";
 
-export function Preloader() {
+// CORRECCIÓN: Usamos export default para ser compatible con layout.tsx
+export default function Preloader() { 
   const [hidden, setHidden] = useState(false);
 
   useEffect(() => {
-    // Pensado más como transición de entrada que como carga real
     const timeout = setTimeout(() => setHidden(true), 700);
     return () => clearTimeout(timeout);
   }, []);

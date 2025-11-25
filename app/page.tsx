@@ -1,28 +1,21 @@
 "use client";
 
-import Image from "next/image";
-// Importamos los componentes clave. Asumimos exportación por defecto para la mayoría.
-import Hero from "@/components/Hero";
-// Nota: Si ScrollShowcase no tiene exportación default, debes renombrar la importación
-import ScrollShowcase from "@/components/ScrollShowcase"; 
-
-// Nota: Navbar, Preloader, PageTransition y FloatingCTA se gestionan en layout.tsx
+import Hero from "@/components/Hero"; // Corregido: Sin llaves
+// Nota: Necesitas crear ScrollShowcase.tsx y exportarlo como default
+// import ScrollShowcase from "@/components/ScrollShowcase"; 
 
 export default function HomePage() {
   
-  // La lógica useLenis y Navbar/Preloader se movieron a layout.tsx
+  // useLenis removido. Navbar, Preloader, PageTransition en layout.tsx
 
   return (
     <div className="page">
-      {/* PageTransition envuelve el contenido principal (main) según el diseño Ribbit */}
       <main>
-        {/* ============ HERO (INICIO) ============ */}
-        {/* El Hero ya incluye <section id="inicio" ... /> */}
-        <Hero />
+          {/* ============ HERO (INICIO) ============ */}
+          <Hero />
 
-        {/* ============ SERVICIOS ============ */}
-        {/* Sección con estructura detallada, lista para CSS externo */}
-        <section id="servicios" className="section section-padded bg-[#f9f3ec] py-20">
+          {/* ============ SERVICIOS (Inicio de sección compleja) ============ */}
+          <section id="servicios" className="section section-padded bg-[#f9f3ec] py-20">
             <div className="section-header container-safe">
               <p className="text-[#b07357] font-bold tracking-[0.25em] text-xs uppercase mb-2">Qué hacemos</p>
               <h2 className="text-4xl font-serif text-[#1e1713] mb-4">Servicios pensados para exteriorizar tu hogar</h2>
@@ -128,9 +121,7 @@ export default function HomePage() {
           </section>
 
           {/* ============ COTIZA (SHOWCASE SCROLL) ============ */}
-          {/* Este componente ya incluye <section id="cotiza" ... /> 
-             Hemos dejado el componente ScrollShowcase en la raíz de components/.
-          */}
+          {/* Si quieres usar el componente ScrollShowcase, descomenta la siguiente línea y asegúrate de que el archivo ScrollShowcase.tsx exista en /components/ */}
           {/* <ScrollShowcase /> */}
 
           {/* ============ PROCESO (NOSOTROS/EXPERIENCIA) ============ */}
@@ -160,7 +151,6 @@ export default function HomePage() {
           </section>
 
           {/* ============ CONTACTO (Formulario & Info) ============ */}
-          {/* Requerirá el componente Contact.tsx completo */}
           <section id="contacto" className="section section-padded bg-[#f9f3ec] py-20">
              <div className="container-safe">
               <p className="text-[#b07357] font-bold tracking-[0.25em] text-xs uppercase mb-2">INICIA AQUÍ</p>
@@ -188,6 +178,7 @@ export default function HomePage() {
 
         </main>
 
+        {/* Footer */}
         <footer className="site-footer">
           <div className="site-footer-inner">
             <span>

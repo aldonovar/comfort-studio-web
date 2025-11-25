@@ -1,89 +1,85 @@
 'use client';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react'; // Añadimos useRef
+import gsap from 'gsap'; // Reincorporamos GSAP
 
 const MENU_ITEMS = [
   { label: 'INICIO', href: '#inicio' },
   { label: 'SERVICIOS', href: '#servicios' },
   { label: 'PROYECTOS', href: '#portafolio' },
-  { label: 'NOSOTROS', href: '#experiencia' },
   { label: 'CONTACTO', href: '#contacto' },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const overlayRef = useRef(null);
+  const linksRef = useRef<HTMLDivElement>(null);
 
+  // Detectar Scroll
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Animación Menú Móvil (GSAP)
+  useEffect(() => {
+    // Si menuOpen cambia, la animación se ejecutará
+    if (menuOpen) {
+      document.body.style.overflow = 'hidden'; 
+      gsap.to(overlayRef.current, { y: '0%', duration: 0.8, ease: 'power4.inOut' });
+    } else {
+      document.body.style.overflow = 'auto'; 
+      gsap.to(overlayRef.current, { y: '-100%', duration: 0.8, ease: 'power4.inOut' });
+    }
+  }, [menuOpen]);
+
   return (
     <>
       {/* HEADER FIXED */}
       <header
-        className={`fixed top-0 left-0 w-full z-[1000] transition-all duration-500 ${
-          scrolled ? 'py-4 bg-[#f9f3ec]/90 backdrop-blur-md border-b border-[#1e1713]/5' : 'py-8 bg-transparent'
+        className={`fixed top-0 left-0 w-full z-[9999] transition-all duration-500 ${
+          scrolled ? 'py-4 bg-[#f9f3ec]/85 backdrop-blur-xl border-b border-[#1e1713]/5 shadow-sm' : 'py-8 bg-transparent'
         }`}
       >
         <div className="container-safe flex justify-between items-center">
           
-          {/* 1. LOGO & MARCA */}
-          <Link href="/" className="relative z-[1002] flex items-center gap-4 group">
-            <div className="relative w-[50px] h-[50px]">
-              <Image 
-                src="/logo.png" 
-                alt="Comfort Studio" 
-                fill 
-                className="object-contain"
-                priority 
-              />
+          {/* LOGO */}
+          <Link href="/" className="relative z-[10002] flex items-center gap-4 group" onClick={() => setMenuOpen(false)}>
+            <div className="relative w-10 h-10 overflow-hidden">
+              <Image src="/logo.png" alt="Comfort Studio" fill className="object-contain" priority />
             </div>
-            <div className="flex flex-col">
-              <span className="font-sans font-bold text-[#b07357] text-sm tracking-[0.25em] leading-none">
-                COMFORT
-              </span>
-              <span className="font-sans font-medium text-[#1e1713] text-[0.7rem] tracking-[0.4em] leading-tight mt-1">
-                STUDIO
-              </span>
+            <div className="flex flex-col leading-none">
+              <span className="font-sans font-bold text-[#b07357] text-xs tracking-[0.2em]">COMFORT</span>
+              <span className="font-sans font-medium text-[#1e1713] text-[0.6rem] tracking-[0.35em]">STUDIO</span>
             </div>
           </Link>
 
-          {/* 2. MENÚ ESCRITORIO (Visible en lg+) */}
+          {/* MENÚ ESCRITORIO */}
           <nav className="hidden lg:flex items-center gap-12">
             {MENU_ITEMS.map((item) => (
-              <Link 
-                key={item.label}
-                href={item.href}
-                className="relative text-xs font-bold text-[#1e1713] tracking-[0.2em] py-2 group overflow-hidden"
-              >
-                <span className="relative z-10 transition-colors group-hover:text-[#b07357]">
-                  {item.label}
-                </span>
+              <Link key={item.label} href={item.href} className="text-xs font-bold text-[#1e1713] tracking-[0.2em] py-2 relative group overflow-hidden">
+                <span className="relative z-10 transition-colors group-hover:text-[#b07357]">{item.label}</span>
                 <span className="absolute bottom-0 left-0 w-full h-[1px] bg-[#b07357] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out"></span>
               </Link>
             ))}
           </nav>
 
-          {/* 3. ACCIONES & HAMBURGUESA */}
-          <div className="flex items-center gap-6 relative z-[1002]">
+          {/* ACCIONES & HAMBURGUESA */}
+          <div className="flex items-center gap-6 relative z-[10002]">
             <Link 
               href="#contacto"
-              className="hidden md:flex border border-[#1e1713] px-8 py-3 text-xs font-bold tracking-[0.2em] text-[#1e1713] hover:bg-[#1e1713] hover:text-[#f9f3ec] transition-all duration-300"
+              className="hidden md:flex border border-[#1e1713] px-8 py-3 text-[0.7rem] font-bold tracking-[0.25em] text-[#1e1713] hover:bg-[#1e1713] hover:text-white transition-all duration-300"
             >
               COTIZAR
             </Link>
 
-            <button 
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="lg:hidden w-10 h-8 flex flex-col justify-between group cursor-pointer"
-            >
-              <span className={`h-[2px] bg-[#1e1713] w-full transition-transform duration-300 ${menuOpen ? 'rotate-45 translate-y-[14px]' : ''}`} />
+            <button onClick={() => setMenuOpen(!menuOpen)} className="lg:hidden w-10 h-8 flex flex-col justify-between group cursor-pointer">
+              <span className={`h-[2px] bg-[#1e1713] w-full transition-transform duration-300 ${menuOpen ? 'rotate-45 translate-y-[14px] bg-[#f9f3ec]' : ''}`} />
               <span className={`h-[2px] bg-[#1e1713] w-full transition-opacity duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-              <span className={`h-[2px] bg-[#1e1713] w-full transition-transform duration-300 ${menuOpen ? '-rotate-45 -translate-y-[14px]' : ''}`} />
+              <span className={`h-[2px] bg-[#1e1713] w-full transition-transform duration-300 ${menuOpen ? '-rotate-45 -translate-y-[14px] bg-[#f9f3ec]' : ''}`} />
             </button>
           </div>
 
@@ -92,12 +88,11 @@ export default function Navbar() {
 
       {/* MENÚ MÓVIL OVERLAY */}
       <div 
-        className={`fixed inset-0 z-[1001] bg-[#1e1713] flex items-center justify-center transition-transform duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] ${
-          menuOpen ? 'translate-y-0' : '-translate-y-full'
-        }`}
+        ref={overlayRef}
+        className="fixed inset-0 z-[10000] bg-[#1e1713] flex items-center justify-center translate-y-[-100%]"
       >
-        <nav className="flex flex-col items-center gap-8 text-center">
-          {MENU_ITEMS.map((item, i) => (
+        <nav ref={linksRef} className="flex flex-col items-center gap-8 text-center">
+          {MENU_ITEMS.map((item) => (
             <Link 
               key={item.label}
               href={item.href}
