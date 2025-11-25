@@ -129,3 +129,67 @@ button {
   line-height: 1.1;
   letter-spacing: -0.03em;
 }
+
+/* --- NAVEGACIÓN MAESTRA --- */
+
+/* Animación de línea inferior (Underline) */
+.nav-link {
+  position: relative;
+  display: inline-block;
+  padding: 0.5rem 0;
+  color: var(--ink);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--terracota);
+  transform-origin: bottom right;
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-link:hover {
+  color: var(--terracota);
+}
+
+.nav-link:hover::after {
+  transform: scaleX(1);
+  transform-origin: bottom left;
+}
+
+/* Botón Cotizar Especial */
+.btn-nav {
+  border: 1px solid rgba(30, 23, 19, 0.2);
+  padding: 0.7rem 2rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 700;
+  color: var(--ink);
+  transition: all 0.3s ease;
+  border-radius: 2px;
+  /* Bordes casi rectos, arquitectónicos */
+}
+
+.btn-nav:hover {
+  background-color: var(--ink);
+  color: var(--white);
+  border-color: var(--ink);
+}
+
+/* Menú Móvil Overlay */
+.mobile-menu-overlay {
+  background-color: rgba(250, 248, 241, 0.98);
+  /* Crema muy sólido */
+  backdrop-filter: blur(10px);
+}
