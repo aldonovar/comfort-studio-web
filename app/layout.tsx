@@ -1,29 +1,33 @@
 import type { Metadata } from "next";
-import Script from 'next/script';
 import { Montserrat, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import SmoothScroller from "@/components/SmoothScroller";
-import PageTransition from "@/components/PageTransition"; // El nuevo telón
+import PageTransition from "@/components/PageTransition";
+import Navbar from "@/components/Navbar";
 import FloatingCTA from "@/components/FloatingCTA";
 
-// Configuración Tipográfica "Pareja de Poder"
+// --- CONFIGURACIÓN TIPOGRÁFICA "PAREJA DE PODER" ---
+// Montserrat: Para textos técnicos, navegación y UI (Modernidad)
 const montserrat = Montserrat({
   subsets: ["latin"],
-  variable: "--font-montserrat",
+  variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 });
 
+// Cormorant Garamond: Para títulos editoriales y números (Lujo/Elegancia)
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-cormorant",
+  variable: "--font-serif",
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
   style: ["normal", "italic"],
 });
 
+// --- METADATA SEO ---
 export const metadata: Metadata = {
-  title: "Comfort Studio | Outdoor Living de Lujo",
-  description: "Arquitectura, diseño y construcción de terrazas premium en Perú.",
+  title: "Comfort Studio | Arquitectura & Outdoor Living",
+  description: "Especialistas en diseño y construcción de terrazas de lujo, techos sol y sombra y espacios bioclimáticos en Perú.",
 };
 
 export default function RootLayout({
@@ -33,21 +37,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${montserrat.variable} ${cormorant.variable}`}>
-      <body className="antialiased bg-[#f9f3ec]">
-        {/* 1. Lógica de Scroll */}
+      <body className="antialiased bg-[#f9f3ec] text-[#1e1713]">
+        
+        {/* 1. MOTOR DE SCROLL SUAVE (Lenis) 
+            Hace que toda la experiencia de navegación se sienta "premium". */}
         <SmoothScroller />
-
-        {/* 2. Transición de Entrada (El efecto Ribbit) */}
+        
+        {/* 2. TELÓN DE ENTRADA (Page Transition)
+            La cortina negra que sube al cargar la página. */}
         <PageTransition />
+        
+        {/* 3. CAPA DE TEXTURA (Noise Overlay)
+            Añade un grano sutil tipo "film" sobre toda la web. */}
+        <div className="noise-overlay"></div>
 
-        {/* 3. Textura Global */}
-        <div className="noise-layer"></div>
-
-        {/* 4. Contenido */}
-        {children}
-
-        {/* 5. Botón Flotante (Siempre visible) */}
+        {/* 4. ELEMENTOS FIJOS DE NAVEGACIÓN */}
+        <Navbar />
         <FloatingCTA />
+
+        {/* 5. CONTENIDO DINÁMICO DE LAS PÁGINAS */}
+        <div className="relative z-10">
+          {children}
+        </div>
+
       </body>
     </html>
   );

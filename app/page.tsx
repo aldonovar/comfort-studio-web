@@ -1,34 +1,30 @@
-import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
-import ServicesScroll from '@/components/ServicesScroll';
-import Process from '@/components/Process';
-import PortfolioStrip from '@/components/PortfolioStrip';
-import Contact from '@/components/Contact';
-import Footer from '@/components/Footer';
 
 export default function Home() {
   return (
-    <main className="w-full overflow-x-hidden">
-      {/* 1. NAVEGACIÓN (Estilo Ribbit: Fija y Transparente/Overlay) */}
-      <Navbar />
-
-      {/* 2. PORTADA */}
+    <main className="w-full min-h-screen">
+      
+      {/* SECCIÓN 1: PORTADA (HERO) 
+          La primera impresión. Debe ser impecable.
+      */}
       <Hero />
 
-      {/* 3. EXPERIENCIA (Servicios con Scroll Lateral) */}
-      <ServicesScroll />
+      {/* ESPACIO TEMPORAL PARA SCROLL 
+        Esto es solo para que puedas probar el efecto de "Vidrio Esmerilado" 
+        de la barra de navegación al bajar. 
+        Lo reemplazaremos pronto con la sección de "Servicios".
+      */}
+      <div className="h-screen w-full flex items-center justify-center bg-[#f9f3ec]">
+        <div className="text-center opacity-30">
+          <span className="block text-xs font-bold tracking-[0.3em] uppercase mb-2">
+            Próximamente
+          </span>
+          <h2 className="text-4xl font-serif italic text-[#1e1713]">
+            Experiencia de Scroll
+          </h2>
+        </div>
+      </div>
 
-      {/* 4. MÉTODO (Proceso de trabajo) */}
-      <Process />
-
-      {/* 5. GALERÍA (Portafolio) */}
-      <PortfolioStrip />
-
-      {/* 6. CONVERSIÓN (Formulario WhatsApp) */}
-      <Contact />
-
-      {/* 7. CIERRE (Pie de página) */}
-      <Footer />
     </main>
   );
 }

@@ -3,82 +3,63 @@
 @tailwind utilities;
 
 :root {
-  /* --- PALETA SIGNATURE (Tierra & Lujo) --- */
+  /* --- PALETA SIGNATURE (Lujo & Tierra) --- */
   --color-terracota: #b07357;
-  --color-ink: #1e1713;
-  /* Negro Café Profundo */
-  --color-sand: #f9f3ec;
-  /* Crema Base */
+  --color-ink: #1e1713;       /* Negro Café Profundo (Texto) */
+  --color-sand: #f9f3ec;      /* Crema Base (Fondo) */
   --color-white: #ffffff;
+  
+  /* --- CAPAS (Z-INDEX MAESTRO) --- */
+  /* Esto asegura que la navegación SIEMPRE gane */
+  --z-back: -1;
+  --z-base: 1;
+  --z-content: 10;
+  --z-navbar: 9999;      /* Nivel Dios: Nada por encima */
+  --z-overlay: 10000;    /* Menú Móvil */
+  --z-cursor: 10001;     /* Cursor personalizado */
 
-  /* --- FUENTES --- */
-  --font-sans: var(--font-montserrat);
-  --font-serif: var(--font-cormorant);
-
-  /* --- FÍSICA DE ANIMACIÓN (The "Ribbit" Feel) --- */
-  /* Curva exponencial para movimientos rápidos al inicio y suaves al final */
-  --ease-expo: cubic-bezier(0.19, 1, 0.22, 1);
-  --ease-fluid: cubic-bezier(0.77, 0, 0.175, 1);
+  /* --- FÍSICA DE ANIMACIÓN --- */
+  /* Curvas Bezier para movimiento "caro" (lento al final) */
+  --ease-signature: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-/* --- CONFIGURACIÓN LENIS (Scroll Suave) --- */
-html.lenis,
-html.lenis body {
-  height: auto;
-}
+/* Configuración Lenis (Scroll Suave Obligatorio) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+.lenis.lenis-stopped { overflow: hidden; }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-/* --- BASE --- */
 body {
   background-color: var(--color-sand);
   color: var(--color-ink);
-  font-family: var(--font-sans);
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  /* Evita scroll horizontal accidental */
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: antialiased; /* Texto nítido en Mac */
 }
 
-/* --- RESET CRÍTICO DE NAVEGACIÓN --- */
-a {
-  text-decoration: none;
-  color: inherit;
-  cursor: pointer;
+/* Reset agresivo para evitar enlaces azules */
+a { 
+  text-decoration: none; 
+  color: inherit; 
 }
 
-/* --- UTILIDADES DE LUJO --- */
-.text-balance {
-  text-wrap: balance;
-}
+/* --- UTILIDADES VISUALES --- */
 
-/* Clase para ocultar scrollbar pero permitir scroll */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-/* Efecto de Ruido (Noise) Sutil */
-.noise-layer {
+/* Ruido Fílmico (Textura de calidad) */
+.noise-overlay {
   position: fixed;
-  inset: 0;
-  z-index: 9000;
+  top: 0; left: 0; width: 100%; height: 100%;
+  z-index: 50; /* Por encima del fondo, debajo del contenido */
   pointer-events: none;
-  opacity: 0.03;
+  opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+/* Contenedor Maestro */
+.container-safe {
+  width: 100%;
+  max-width: 1600px; /* Ancho moderno "Wide" */
+  margin: 0 auto;
+  padding: 0 4vw;
 }
