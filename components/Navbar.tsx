@@ -4,12 +4,13 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import TopBanner from './TopBanner';
 
+// SECCIONES EXACTAS SOLICITADAS
 const MENU_ITEMS = [
-  { label: 'Inicio', href: '#inicio' },
-  { label: 'Nosotros', href: '#experiencia' },
-  { label: 'Servicios', href: '#servicios' },
-  { label: 'Proyectos', href: '#portafolio' },
-  { label: 'Contacto', href: '#contacto' },
+  { label: 'INICIO', href: '#inicio' },
+  { label: 'SERVICIOS', href: '#servicios' },
+  { label: 'PROYECTOS', href: '#portafolio' },
+  { label: 'COTIZA', href: '#contacto' },
+  { label: 'CONTACTO', href: '#contacto' },
 ];
 
 export default function Navbar() {
@@ -28,7 +29,7 @@ export default function Navbar() {
 
   return (
     <>
-      {/* --- TOP BANNER (Desaparece al bajar) --- */}
+      {/* --- TOP BANNER --- */}
       <div
         style={{
           position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 102,
@@ -39,15 +40,15 @@ export default function Navbar() {
         <TopBanner />
       </div>
 
-      {/* --- HEADER (Logo + Botón Menú) --- */}
+      {/* --- HEADER PRINCIPAL --- */}
       <header
-        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'py-3 bg-[#faf8f1]/90 backdrop-blur-md shadow-sm' : 'py-6 bg-transparent'
+        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'py-3 bg-[#faf8f1]/95 backdrop-blur-md shadow-sm' : 'py-6 bg-transparent'
           }`}
         style={{ paddingTop: scrolled ? '15px' : '50px' }}
       >
         <div className="container-safe flex justify-between items-center px-[5%]">
 
-          {/* LOGO */}
+          {/* 1. LOGO (Corregido: Sin filtros de inversión) */}
           <Link href="/" className="flex items-center gap-3 relative z-[102]" onClick={() => setMenuOpen(false)}>
             <div className="relative w-10 h-10">
               <Image
@@ -56,22 +57,43 @@ export default function Navbar() {
                 fill
                 className="object-contain"
                 priority
+              // Eliminamos clases 'invert' o filtros que ocultaban el logo
               />
             </div>
             <div className="flex flex-col leading-none">
-              <span className="font-bold text-[#b07357] text-sm tracking-widest">COMFORT</span>
-              <span className="font-light text-[#1e1713] text-xs tracking-[3px]">STUDIO</span>
+              {/* Tipografía Montserrat ajustada para igualar al logo */}
+              <span className="font-['Montserrat'] font-bold text-[#b07357] text-sm tracking-widest">
+                COMFORT
+              </span>
+              <span className="font-['Montserrat'] font-light text-[#1e1713] text-xs tracking-[3px]">
+                STUDIO
+              </span>
             </div>
           </Link>
 
-          {/* BOTONES DERECHA */}
+          {/* 2. MENÚ ESCRITORIO (Visible y Solido) */}
+          <nav className="hidden md:flex items-center gap-8">
+            {MENU_ITEMS.slice(0, 4).map((item) => (
+              <Link
+                key={item.label}
+                href={item.href}
+                className="font-['Montserrat'] text-[#1e1713] text-xs font-medium uppercase tracking-[2px] hover:text-[#b07357] transition-colors relative group"
+              >
+                {item.label}
+                {/* Línea animada inferior */}
+                <span className="absolute bottom-[-4px] left-0 w-0 h-[1px] bg-[#b07357] transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+            ))}
+          </nav>
+
+          {/* 3. BOTONES DERECHA */}
           <div className="flex items-center gap-6 relative z-[102]">
-            {/* Cotizar (Escritorio) */}
+            {/* Botón Cotiza destacado */}
             <Link
               href="#contacto"
-              className="hidden md:inline-block border border-[#1e1713] px-6 py-2 text-xs uppercase tracking-widest text-[#1e1713] hover:bg-[#1e1713] hover:text-white transition-all duration-300"
+              className="hidden md:inline-block border border-[#1e1713] px-6 py-2 text-xs uppercase tracking-widest text-[#1e1713] font-['Montserrat'] font-semibold hover:bg-[#1e1713] hover:text-white transition-all duration-300"
             >
-              Cotizar
+              COTIZA
             </Link>
 
             {/* Botón Menú (Hamburguesa) */}
@@ -96,12 +118,12 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* --- OVERLAY DE MENÚ GIGANTE (Aquí estaba el error visual) --- */}
+      {/* --- OVERLAY DE MENÚ GIGANTE (Estilo Ribbit) --- */}
       <div
         style={{
           position: 'fixed',
           inset: 0,
-          backgroundColor: '#111111', // Fondo Negro Profundo
+          backgroundColor: '#111111',
           zIndex: 101,
           display: 'flex',
           flexDirection: 'column',
@@ -114,36 +136,30 @@ export default function Navbar() {
         {/* Fondo decorativo */}
         <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] pointer-events-none"></div>
 
-        {/* LISTA DE ENLACES */}
-        <nav className="flex flex-col items-center gap-2 z-10">
+        <nav className="flex flex-col items-center gap-4 z-10">
           {MENU_ITEMS.map((item, index) => (
-            <div key={item.label} className="overflow-hidden">
-              <Link
-                href={item.href}
-                onClick={() => setMenuOpen(false)}
-                // Usamos clases de Tailwind para tamaño y la clase personalizada 'menu-overlay-link' para el estilo
-                className={`text-5xl md:text-7xl menu-overlay-link ${menuOpen ? 'animate-in' : ''}`}
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {item.label}
-              </Link>
-            </div>
+            <Link
+              key={item.label}
+              href={item.href}
+              onClick={() => setMenuOpen(false)}
+              // Usamos texto sólido blanco para garantizar visibilidad máxima
+              className={`text-4xl md:text-6xl font-bold uppercase font-['Montserrat'] text-white hover:text-[#b07357] transition-colors duration-300 tracking-widest ${menuOpen ? 'animate-in' : ''
+                }`}
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              {item.label}
+            </Link>
           ))}
         </nav>
 
-        {/* FOOTER DEL MENÚ (Redes Sociales) - Corregido */}
-        <div className="absolute bottom-10 w-full px-[5%] flex flex-col md:flex-row justify-between items-center gap-4 z-10">
-
-          {/* Redes separadas correctamente */}
-          <div className="flex items-center gap-8">
-            <a href="https://instagram.com" target="_blank" className="social-link">Instagram</a>
-            <a href="https://facebook.com" target="_blank" className="social-link">Facebook</a>
-            <a href="https://tiktok.com" target="_blank" className="social-link">TikTok</a>
+        {/* Footer del Menú */}
+        <div className="absolute bottom-10 w-full px-[5%] flex flex-col md:flex-row justify-between items-center gap-4 z-10 text-white/50 text-xs uppercase tracking-widest">
+          <div className="flex gap-8">
+            <a href="https://instagram.com" target="_blank" className="hover:text-white transition-colors">Instagram</a>
+            <a href="https://facebook.com" target="_blank" className="hover:text-white transition-colors">Facebook</a>
+            <a href="https://tiktok.com" target="_blank" className="hover:text-white transition-colors">TikTok</a>
           </div>
-
-          <div className="text-white/30 text-xs uppercase tracking-widest">
-            Lima • Perú • 2025
-          </div>
+          <div>Lima, Perú • 2025</div>
         </div>
       </div>
     </>

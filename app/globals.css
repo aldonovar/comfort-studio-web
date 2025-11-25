@@ -3,16 +3,20 @@
 @tailwind utilities;
 
 :root {
-  /* PALETA DE IDENTIDAD COMFORT STUDIO */
+  /* --- PALETA DE IDENTIDAD COMFORT STUDIO --- */
   --terracota: #b86f4b;
   --terracota-soft: #d28a5f;
   --terracota-pale: #f3d3b7;
+
+  /* Fondo Base (Arena/Crema) */
   --sand: #f9f3ec;
-  /* Color Base (Arena/Crema) */
   --sand-soft: #f2e3d5;
-  --ink: #1e1713;
+
   /* Texto Principal (Negro Suave) */
+  --ink: #1e1713;
   --ink-soft: #4d3d34;
+
+  /* Acentos */
   --accent-gold: #f6c892;
   --white: #ffffff;
 
@@ -36,16 +40,26 @@ body {
   padding: 0;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  /* Texto nítido en Mac */
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* --- RESET DE ENLACES (CRÍTICO PARA EVITAR AZUL) --- */
+/* --- RESET CRÍTICO DE ENLACES (FIX AZUL) --- */
+/* Esto fuerza a que ningún enlace tenga el color azul por defecto del navegador */
 a {
   text-decoration: none !important;
   color: inherit;
   cursor: pointer;
 }
 
-/* --- FONDO ANIMADO (Arquitectónico) --- */
+a:visited,
+a:active,
+a:focus {
+  color: inherit;
+  text-decoration: none !important;
+}
+
+/* --- FONDO ANIMADO (ARQUITECTÓNICO) --- */
 .bg-root {
   position: fixed;
   inset: 0;
@@ -77,38 +91,37 @@ a {
 
 /* --- NAVEGACIÓN: ESTILO "RIBBIT" / AWWWARDS --- */
 
-/* 1. Enlaces del Menú de Pantalla Completa (Texto Hueco) */
+/* 1. Enlaces del Menú de Pantalla Completa (Mobile Overlay) */
 .menu-overlay-link {
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 800;
   /* Extra bold para impacto */
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: transparent;
-  /* Texto transparente base */
-  -webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: rgba(255, 255, 255, 0.4);
-  /* Borde fino */
+  color: #ffffff !important;
+  /* BLANCO SÓLIDO OBLIGATORIO */
   transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
   display: block;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
-/* Estado Hover: Relleno blanco y desplazamiento */
+/* Estado Hover: Color Terracota y desplazamiento */
 .menu-overlay-link:hover {
-  color: #ffffff !important;
-  -webkit-text-fill-color: #ffffff;
-  -webkit-text-stroke-width: 0px;
+  color: var(--terracota) !important;
   transform: translateX(20px);
   /* Movimiento cinemático a la derecha */
 }
 
-/* 2. Enlaces del Menú Escritorio (Línea inferior) */
+/* 2. Enlaces del Menú Escritorio (Barra superior) */
 .nav-link-hover {
   position: relative;
   display: inline-block;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-size: 0.8rem;
+  color: var(--ink);
   transition: color 0.3s ease;
 }
 
@@ -116,12 +129,15 @@ a {
   content: '';
   position: absolute;
   width: 0;
-  height: 1px;
-  bottom: -2px;
+  height: 2px;
+  bottom: -4px;
   left: 0;
-  background-color: #b07357;
-  /* Terracota */
+  background-color: var(--terracota);
   transition: width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.nav-link-hover:hover {
+  color: var(--terracota);
 }
 
 .nav-link-hover:hover::after {
@@ -130,8 +146,9 @@ a {
 
 /* 3. Redes Sociales en el Menú */
 .social-link {
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6) !important;
+  /* Gris claro inicial */
+  font-size: 12px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -140,11 +157,14 @@ a {
 }
 
 .social-link:hover {
-  color: #ffffff;
+  color: #ffffff !important;
+  /* Blanco puro al hover */
   transform: translateY(-2px);
 }
 
-/* --- ANIMACIONES --- */
+/* --- ANIMACIONES GENERALES --- */
+
+/* Slide Up para el menú */
 @keyframes slideInUp {
   from {
     opacity: 0;
@@ -159,15 +179,28 @@ a {
 
 .nav-item-animate {
   opacity: 0;
+  /* Comienza invisible */
   animation: slideInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* --- UI ELEMENTS --- */
+/* Fade In simple */
+.fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}
 
-/* Botones */
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* --- ELEMENTOS DE INTERFAZ (UI) --- */
+
+/* Botones Principales (Rellenos) */
 .btn-primary {
   background-color: var(--terracota);
-  color: var(--white);
+  color: var(--white) !important;
   padding: 0.8rem 2rem;
   border-radius: 999px;
   /* Cápsula */
@@ -183,6 +216,7 @@ a {
   gap: 8px;
   box-shadow: 0 4px 12px rgba(184, 111, 75, 0.2);
   cursor: pointer;
+  text-decoration: none !important;
 }
 
 .btn-primary:hover {
@@ -192,9 +226,10 @@ a {
   box-shadow: 0 8px 20px rgba(30, 23, 19, 0.2);
 }
 
+/* Botones Secundarios (Borde) */
 .btn-outline {
   background-color: transparent;
-  color: var(--ink);
+  color: var(--ink) !important;
   padding: 0.8rem 2rem;
   border-radius: 999px;
   font-weight: 600;
@@ -207,15 +242,16 @@ a {
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  text-decoration: none !important;
 }
 
 .btn-outline:hover {
   background-color: rgba(30, 23, 19, 0.05);
   border-color: var(--terracota);
-  color: var(--terracota);
+  color: var(--terracota) !important;
 }
 
-/* Utilidades de Texto */
+/* --- UTILIDADES DE TEXTO --- */
 h1,
 h2,
 h3 {
@@ -228,13 +264,18 @@ h3 {
   color: var(--terracota);
 }
 
+/* --- CONTENEDORES Y ESPACIADO --- */
 .container-safe {
   max-width: 1360px;
   margin: 0 auto;
   padding: 0 5%;
 }
 
-/* Formularios Clean */
+.section-padding {
+  padding: 6rem 0;
+}
+
+/* --- FORMULARIOS (Clean & Modern) --- */
 input,
 textarea,
 select {
@@ -243,6 +284,8 @@ select {
   background-color: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  width: 100%;
+  font-family: var(--font-montserrat);
 }
 
 input:focus,
@@ -254,7 +297,7 @@ select:focus {
   outline: none;
 }
 
-/* Scrollbar Personalizado */
+/* --- SCROLLBAR PERSONALIZADO --- */
 ::-webkit-scrollbar {
   width: 8px;
 }
