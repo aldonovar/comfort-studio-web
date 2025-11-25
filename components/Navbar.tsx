@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import TopBanner from './TopBanner';
 
-// SECCIONES EXACTAS SOLICITADAS
+// Definición de enlaces
 const MENU_ITEMS = [
   { label: 'INICIO', href: '#inicio' },
   { label: 'SERVICIOS', href: '#servicios' },
@@ -23,6 +23,7 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Bloquear scroll al abrir menú móvil
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : 'auto';
   }, [menuOpen]);
@@ -32,9 +33,9 @@ export default function Navbar() {
       {/* --- TOP BANNER --- */}
       <div
         style={{
-          position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 102,
+          position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000,
           transform: scrolled ? 'translateY(-100%)' : 'translateY(0)',
-          transition: 'transform 0.5s ease'
+          transition: 'transform 0.4s ease'
         }}
       >
         <TopBanner />
@@ -42,26 +43,24 @@ export default function Navbar() {
 
       {/* --- HEADER PRINCIPAL --- */}
       <header
-        className={`fixed top-0 left-0 w-full z-[100] transition-all duration-500 ${scrolled ? 'py-3 bg-[#faf8f1]/95 backdrop-blur-md shadow-sm' : 'py-6 bg-transparent'
+        className={`fixed left-0 w-full z-[999] transition-all duration-500 ${scrolled ? 'py-3 bg-[#faf8f1]/95 backdrop-blur-md shadow-sm top-0' : 'py-6 bg-transparent top-[30px] md:top-[40px]'
           }`}
-        style={{ paddingTop: scrolled ? '15px' : '50px' }}
       >
         <div className="container-safe flex justify-between items-center px-[5%]">
 
-          {/* 1. LOGO (Corregido: Sin filtros de inversión) */}
-          <Link href="/" className="flex items-center gap-3 relative z-[102]" onClick={() => setMenuOpen(false)}>
+          {/* 1. LOGO + BRANDING */}
+          <Link href="/" className="flex items-center gap-3 relative z-[1002]" onClick={() => setMenuOpen(false)}>
             <div className="relative w-10 h-10">
+              {/* Aseguramos que el logo cargue con prioridad */}
               <Image
                 src="/logo.png"
                 alt="Comfort Studio"
                 fill
                 className="object-contain"
                 priority
-              // Eliminamos clases 'invert' o filtros que ocultaban el logo
               />
             </div>
             <div className="flex flex-col leading-none">
-              {/* Tipografía Montserrat ajustada para igualar al logo */}
               <span className="font-['Montserrat'] font-bold text-[#b07357] text-sm tracking-widest">
                 COMFORT
               </span>
@@ -71,27 +70,28 @@ export default function Navbar() {
             </div>
           </Link>
 
-          {/* 2. MENÚ ESCRITORIO (Visible y Solido) */}
+          {/* 2. MENÚ ESCRITORIO (Visible y Oscuro) */}
           <nav className="hidden md:flex items-center gap-8">
             {MENU_ITEMS.slice(0, 4).map((item) => (
               <Link
                 key={item.label}
                 href={item.href}
-                className="font-['Montserrat'] text-[#1e1713] text-xs font-medium uppercase tracking-[2px] hover:text-[#b07357] transition-colors relative group"
+                // Color forzado a #1e1713 (Tinta) para contraste alto
+                className="font-['Montserrat'] text-[#1e1713] text-xs font-bold uppercase tracking-[2px] hover:text-[#b07357] transition-colors relative group"
               >
                 {item.label}
                 {/* Línea animada inferior */}
-                <span className="absolute bottom-[-4px] left-0 w-0 h-[1px] bg-[#b07357] transition-all duration-300 group-hover:w-full"></span>
+                <span className="absolute bottom-[-4px] left-0 w-0 h-[2px] bg-[#b07357] transition-all duration-300 group-hover:w-full"></span>
               </Link>
             ))}
           </nav>
 
           {/* 3. BOTONES DERECHA */}
-          <div className="flex items-center gap-6 relative z-[102]">
-            {/* Botón Cotiza destacado */}
+          <div className="flex items-center gap-6 relative z-[1002]">
+            {/* Botón Cotiza */}
             <Link
               href="#contacto"
-              className="hidden md:inline-block border border-[#1e1713] px-6 py-2 text-xs uppercase tracking-widest text-[#1e1713] font-['Montserrat'] font-semibold hover:bg-[#1e1713] hover:text-white transition-all duration-300"
+              className="hidden md:inline-block border border-[#1e1713] px-6 py-2 text-xs uppercase tracking-widest text-[#1e1713] font-['Montserrat'] font-bold hover:bg-[#1e1713] hover:text-white transition-all duration-300"
             >
               COTIZA
             </Link>
@@ -99,18 +99,19 @@ export default function Navbar() {
             {/* Botón Menú (Hamburguesa) */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="flex flex-col items-end justify-center gap-[6px] w-[40px] h-[40px] group cursor-pointer bg-transparent border-none"
+              className="flex flex-col items-end justify-center gap-[6px] w-[40px] h-[40px] group cursor-pointer bg-transparent border-none outline-none"
             >
+              {/* Líneas negras para que se vean sobre el fondo claro */}
               <span
-                className={`h-[2px] bg-[#1e1713] transition-all duration-300 ${menuOpen ? 'w-8 rotate-45 translate-y-[8px] bg-white' : 'w-8 group-hover:w-6'
+                className={`h-[2px] transition-all duration-300 ${menuOpen ? 'w-8 rotate-45 translate-y-[8px] bg-white' : 'w-8 group-hover:w-6 bg-[#1e1713]'
                   }`}
               />
               <span
-                className={`h-[2px] bg-[#1e1713] transition-all duration-300 ${menuOpen ? 'w-0 opacity-0' : 'w-6'
+                className={`h-[2px] transition-all duration-300 ${menuOpen ? 'w-0 opacity-0' : 'w-6 bg-[#1e1713]'
                   }`}
               />
               <span
-                className={`h-[2px] bg-[#1e1713] transition-all duration-300 ${menuOpen ? 'w-8 -rotate-45 -translate-y-[8px] bg-white' : 'w-4 group-hover:w-8'
+                className={`h-[2px] transition-all duration-300 ${menuOpen ? 'w-8 -rotate-45 -translate-y-[8px] bg-white' : 'w-4 group-hover:w-8 bg-[#1e1713]'
                   }`}
               />
             </button>
@@ -124,7 +125,7 @@ export default function Navbar() {
           position: 'fixed',
           inset: 0,
           backgroundColor: '#111111',
-          zIndex: 101,
+          zIndex: 1001,
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
@@ -142,9 +143,8 @@ export default function Navbar() {
               key={item.label}
               href={item.href}
               onClick={() => setMenuOpen(false)}
-              // Usamos texto sólido blanco para garantizar visibilidad máxima
-              className={`text-4xl md:text-6xl font-bold uppercase font-['Montserrat'] text-white hover:text-[#b07357] transition-colors duration-300 tracking-widest ${menuOpen ? 'animate-in' : ''
-                }`}
+              // Clases globales definidas en globals.css
+              className={`menu-overlay-link text-4xl md:text-6xl ${menuOpen ? 'nav-item-animate' : ''}`}
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {item.label}
@@ -153,13 +153,15 @@ export default function Navbar() {
         </nav>
 
         {/* Footer del Menú */}
-        <div className="absolute bottom-10 w-full px-[5%] flex flex-col md:flex-row justify-between items-center gap-4 z-10 text-white/50 text-xs uppercase tracking-widest">
+        <div className="absolute bottom-10 w-full px-[5%] flex flex-col md:flex-row justify-between items-center gap-4 z-10">
           <div className="flex gap-8">
-            <a href="https://instagram.com" target="_blank" className="hover:text-white transition-colors">Instagram</a>
-            <a href="https://facebook.com" target="_blank" className="hover:text-white transition-colors">Facebook</a>
-            <a href="https://tiktok.com" target="_blank" className="hover:text-white transition-colors">TikTok</a>
+            <a href="https://instagram.com" target="_blank" className="social-link">Instagram</a>
+            <a href="https://facebook.com" target="_blank" className="social-link">Facebook</a>
+            <a href="https://tiktok.com" target="_blank" className="social-link">TikTok</a>
           </div>
-          <div>Lima, Perú • 2025</div>
+          <div className="text-white/40 text-xs uppercase tracking-widest font-['Montserrat']">
+            Lima • Perú • 2025
+          </div>
         </div>
       </div>
     </>
