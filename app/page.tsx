@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import Hero from "@/components/Hero"; 
-// NOTA: Asume que ScrollShowcase.tsx existe y usa export default
-// import ScrollShowcase from "@/components/ScrollShowcase"; 
+// NOTA: useLenis y Navbar/Preloader/PageTransition se gestionan en layout.tsx
 
 export default function HomePage() {
   
+  // useLenis() HA SIDO REMOVIDO PARA EVITAR EL CONFLICTO DE TIPOS.
+
   return (
     <div className="page">
       <main>
@@ -120,7 +121,7 @@ export default function HomePage() {
           </section>
 
           {/* ============ COTIZA (SHOWCASE SCROLL) ============ */}
-          {/* Si usas ScrollShowcase, descomenta la siguiente línea */}
+          {/* Si usas ScrollShowcase, descomenta la siguiente línea y asegúrate de que exista y use export default */}
           {/* <ScrollShowcase /> */}
 
           {/* ============ PROCESO (NOSOTROS/EXPERIENCIA) ============ */}
