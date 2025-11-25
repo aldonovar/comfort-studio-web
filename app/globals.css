@@ -3,20 +3,23 @@
 @tailwind utilities;
 
 :root {
-  /* --- PALETA COMFORT STUDIO (Extaída de tu logo) --- */
+  /* PALETA DE IDENTIDAD */
   --terracota: #b07357;
   --terracota-dark: #8a5a44;
   --sand: #f9f3ec;
-  /* Fondo Crema */
   --ink: #1e1713;
-  /* Negro Café (Lujo) */
   --white: #ffffff;
 
-  /* Configuración de Fuentes (Next.js) */
+  /* Configuración de Fuentes */
   --font-montserrat: var(--font-sans);
   --font-serif: var(--font-serif);
+
+  /* Curvas de Animación "Lujo" (Suaves al inicio, rápidas al final) */
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+  --ease-in-out-circ: cubic-bezier(0.785, 0.135, 0.15, 0.86);
 }
 
+/* Configuración Lenis (Scroll Suave) */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -34,10 +37,6 @@ html.lenis body {
   overflow: hidden;
 }
 
-.lenis.lenis-scrolling iframe {
-  pointer-events: none;
-}
-
 body {
   background-color: var(--sand);
   color: var(--ink);
@@ -48,7 +47,7 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* --- RESET CRÍTICO (Arregla enlaces azules y botones rotos) --- */
+/* Reset de Enlaces */
 a {
   text-decoration: none;
   color: inherit;
@@ -60,89 +59,19 @@ button {
   cursor: pointer;
 }
 
-/* --- TEXTURA DE RUIDO (Estilo Film/Papel) --- */
-.noise-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 9999;
-  pointer-events: none;
-  opacity: 0.04;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-}
+/* --- ANIMACIONES DE NAVEGACIÓN --- */
 
-/* --- ESTILOS DE BOTONES (Sólidos y Elegantes) --- */
-.btn-primary {
-  background-color: var(--terracota);
-  color: var(--white);
-  padding: 1rem 2.5rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  border: 1px solid var(--terracota);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-primary:hover {
-  background-color: var(--ink);
-  border-color: var(--ink);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(30, 23, 19, 0.15);
-}
-
-.btn-outline {
-  background-color: transparent;
-  color: var(--ink);
-  padding: 1rem 2.5rem;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.75rem;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-  transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
-  border: 1px solid var(--ink);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.btn-outline:hover {
-  background-color: var(--ink);
-  color: var(--white);
-  transform: translateY(-3px);
-}
-
-/* --- UTILIDADES DE TIPOGRAFÍA --- */
-.font-display {
-  font-family: var(--font-serif), serif;
-}
-
-.hero-title {
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-}
-
-/* --- NAVEGACIÓN MAESTRA --- */
-
-/* Animación de línea inferior (Underline) */
+/* 1. Enlaces Desktop: Subrayado que nace del centro o izquierda */
 .nav-link {
   position: relative;
   display: inline-block;
-  padding: 0.5rem 0;
-  color: var(--ink);
-  text-transform: uppercase;
-  letter-spacing: 2px;
   font-size: 0.75rem;
   font-weight: 600;
-  transition: color 0.3s ease;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--ink);
+  padding: 0.5rem 0;
+  transition: color 0.4s var(--ease-out-expo);
 }
 
 .nav-link::after {
@@ -150,12 +79,12 @@ button {
   position: absolute;
   width: 100%;
   transform: scaleX(0);
-  height: 1px;
+  height: 1.5px;
   bottom: 0;
   left: 0;
   background-color: var(--terracota);
   transform-origin: bottom right;
-  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition: transform 0.5s var(--ease-out-expo);
 }
 
 .nav-link:hover {
@@ -167,29 +96,41 @@ button {
   transform-origin: bottom left;
 }
 
-/* Botón Cotizar Especial */
-.btn-nav {
-  border: 1px solid rgba(30, 23, 19, 0.2);
-  padding: 0.7rem 2rem;
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: 700;
-  color: var(--ink);
-  transition: all 0.3s ease;
-  border-radius: 2px;
-  /* Bordes casi rectos, arquitectónicos */
-}
-
-.btn-nav:hover {
+/* 2. Botón Hamburguesa Magnético */
+.burger-line {
+  display: block;
+  height: 2px;
   background-color: var(--ink);
-  color: var(--white);
-  border-color: var(--ink);
+  transition: all 0.4s var(--ease-out-expo);
 }
 
-/* Menú Móvil Overlay */
-.mobile-menu-overlay {
-  background-color: rgba(250, 248, 241, 0.98);
-  /* Crema muy sólido */
-  backdrop-filter: blur(10px);
+/* 3. Menú Móvil: Enlaces Gigantes */
+.mobile-link {
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  line-height: 1.1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(30, 23, 19, 0.3);
+  transition: all 0.5s var(--ease-out-expo);
+  cursor: pointer;
+}
+
+.mobile-link:hover {
+  color: var(--ink);
+  -webkit-text-stroke: 1px var(--ink);
+  transform: translateX(20px);
+}
+
+/* --- UTILIDADES VISUALES --- */
+.glass-panel {
+  background: rgba(249, 243, 236, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(30, 23, 19, 0.05);
+}
+
+.container-safe {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 5%;
 }

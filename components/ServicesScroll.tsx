@@ -18,24 +18,23 @@ export default function ServicesScroll() {
 
     if (!section || !trigger) return;
 
-    // Animación de desplazamiento horizontal anclado
-    const tl = gsap.timeline({
+    // Configuración más ágil del scroll horizontal
+    const scrollTween = gsap.to(section, {
+      x: () => -(section.scrollWidth - window.innerWidth),
+      ease: "none",
       scrollTrigger: {
         trigger: trigger,
         start: "top top",
-        end: "+=3000", // Longitud del scroll vertical
+        end: "+=1500", // REDUCIDO: Antes 3000. Ahora es más rápido salir de aquí.
         scrub: 1,
         pin: true,
         anticipatePin: 1,
+        invalidateOnRefresh: true, // Recalcula si cambia el tamaño de ventana
       }
     });
 
-    tl.to(section, {
-      x: () => -(section.scrollWidth - window.innerWidth),
-      ease: "none",
-    });
-
     return () => {
+      scrollTween.kill();
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, []);
@@ -68,71 +67,50 @@ export default function ServicesScroll() {
   ];
 
   return (
-    <section className="services-wrapper" style={{ overflow: 'hidden' }}>
-      <div ref={triggerRef} style={{ 
-        height: '100vh', 
-        display: 'flex', 
-        alignItems: 'center', 
-        backgroundColor: '#3d312b', // Café oscuro premium
-        color: '#faf8f1',
-        position: 'relative' 
-      }}>
-        
-        {/* Título Estático a la izquierda */}
-        <div style={{ position: 'absolute', left: '5%', zIndex: 20, maxWidth: '280px' }}>
-          <span style={{ color: '#b07357', fontWeight: 700, letterSpacing: '2px', fontSize: '0.85rem', fontFamily: 'var(--font-montserrat)' }}>EXPERIENCIA</span>
-          <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', lineHeight: 1.1, marginTop: '15px', color: '#fff', fontFamily: 'var(--font-montserrat)' }}>
+    <section className="services-wrapper relative bg-[#3d312b]">
+      <div ref={triggerRef} className="h-screen flex items-center overflow-hidden relative">
+
+        {/* BLOQUE DE TEXTO FIJO (Izquierda) */}
+        <div className="absolute left-[5%] z-20 max-w-[300px] text-[#faf8f1]">
+          <span className="text-[#b07357] font-bold tracking-[2px] text-xs uppercase font-sans mb-2 block">
+            EXPERIENCIA
+          </span>
+          <h2 className="text-5xl md:text-6xl font-bold leading-[1.1] mb-4 font-sans">
             Diseño <br /> Integral
           </h2>
-          <p style={{ marginTop: '1.5rem', opacity: 0.8, fontSize: '1rem', lineHeight: 1.6 }}>
-            Desliza para explorar nuestras especialidades.
+          <p className="opacity-80 text-sm leading-relaxed mb-8 font-light">
+            Desliza hacia abajo para explorar nuestras especialidades paso a paso.
           </p>
-          <div style={{ marginTop: '2rem', width: '60px', height: '3px', backgroundColor: '#b07357' }}></div>
+
+          {/* Indicador Visual de Scroll */}
+          <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest opacity-60">
+            <div className="w-8 h-[1px] bg-white/50"></div>
+            Scroll para navegar
+          </div>
         </div>
 
-        {/* Tira Horizontal de imágenes */}
-        <div ref={sectionRef} style={{ display: 'flex', height: '100%', paddingLeft: '35vw' }}>
+        {/* TIRA DE IMÁGENES (Se mueve a la izquierda) */}
+        <div ref={sectionRef} className="flex h-full pl-[40vw] items-center">
           {services.map((item, index) => (
-            <div key={index} style={{ 
-              width: '70vw',      // Ancho base responsivo
-              maxWidth: '800px',  // Límite para que no se vea gigante en monitores grandes
-              height: '100%', 
-              display: 'flex', 
-              alignItems: 'center', 
-              padding: '0 2vw' 
-            }}>
-              <div style={{ 
-                position: 'relative', 
-                width: '100%', 
-                height: '65vh', 
-                borderRadius: '4px', 
-                overflow: 'hidden', 
-                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.6)',
-                backgroundColor: '#2c2c2c'
-              }}>
-                <img 
-                  src={item.img} 
-                  alt={item.title} 
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.85)' }}
+            <div key={index} className="w-[80vw] md:w-[60vw] lg:w-[45vw] h-[70vh] px-4 flex-shrink-0">
+              <div className="relative w-full h-full rounded-lg overflow-hidden group">
+                <img
+                  src={item.img}
+                  alt={item.title}
+                  className="w-full h-full object-cover filter brightness-[0.85] transition-transform duration-700 group-hover:scale-105"
                 />
-                <div style={{ 
-                  position: 'absolute', 
-                  bottom: 0, 
-                  left: 0, 
-                  width: '100%', 
-                  padding: '3rem',
-                  background: 'linear-gradient(to top, rgba(61, 49, 43, 0.95), transparent)' 
-                }}>
-                  <span style={{ fontSize: '4rem', fontWeight: 700, color: 'rgba(255,255,255,0.1)', position: 'absolute', top: '2rem', right: '2rem', fontFamily: 'var(--font-montserrat)' }}>
+                <div className="absolute bottom-0 left-0 w-full p-8 bg-gradient-to-t from-[#3d312b] to-transparent">
+                  <span className="absolute top-4 right-4 text-6xl font-bold text-white/10 font-sans">
                     {item.id}
                   </span>
-                  <h3 style={{ fontSize: '2rem', color: '#fff', marginBottom: '0.5rem', fontFamily: 'var(--font-montserrat)' }}>{item.title}</h3>
-                  <p style={{ color: '#e8dcd5', fontSize: '1.1rem', maxWidth: '90%' }}>{item.desc}</p>
+                  <h3 className="text-2xl text-white mb-2 font-sans font-bold">{item.title}</h3>
+                  <p className="text-[#e8dcd5] text-sm max-w-[90%]">{item.desc}</p>
                 </div>
               </div>
             </div>
           ))}
-          <div style={{ width: '10vw' }}></div> {/* Espacio final */}
+          {/* Espaciador final para que la última tarjeta se vea bien */}
+          <div className="w-[10vw] flex-shrink-0"></div>
         </div>
       </div>
     </section>
