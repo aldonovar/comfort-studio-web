@@ -1,24 +1,27 @@
 "use client";
 
 import Image from "next/image";
-// CORRECCIÓN CLAVE: Eliminamos useLenis y corregimos todas las importaciones a la versión por defecto (sin llaves)
-import Hero from "@/components/Hero";
-import Navbar from "@/components/Navbar"; 
-import Preloader from "@/components/Preloader"; 
-import PageTransition from "@/components/PageTransition";
-import ScrollShowcase from "@/components/ScrollShowcase"; 
-// El hook useLenis() ha sido eliminado
+// CORRECCIÓN CLAVE: Usamos llaves {} para Hero, Navbar, Preloader, PageTransition, ScrollShowcase 
+// para ser compatibles con cualquier estructura de exportación que tengas
+import { Hero } from "@/components/Hero";
+import { Navbar } from "@/components/Navbar";
+import { Preloader } from "@/components/Preloader";
+import { PageTransition } from "@/components/PageTransition";
+import { ScrollShowcase } from "@/components/ScrollShowcase";
+// Eliminamos la importación useLenis (ya no existe)
 
 export default function HomePage() {
+  
   // useLenis(); // LLAMADA REMOVIDA. El scroll suave es global desde layout.tsx.
 
   return (
     <div className="page">
-      {/* CORRECCIÓN: Navbar y Preloader ahora se manejan en layout.tsx. 
-          Aquí solo se debe llamar a PageTransition si no se usa en layout.tsx.
-          Para seguir tu estructura, lo dejamos aquí, confiando en que el layout se encarga de lo global.
-      */}
-      
+      {/* PreCarga ligera / transición de entrada */}
+      <Preloader />
+
+      {/* Barra de navegación sticky */}
+      <Navbar />
+
       {/* Transición general de página */}
       <PageTransition>
         <main>
@@ -90,12 +93,8 @@ export default function HomePage() {
             <div className="grid grid-projects">
               <article className="project-card">
                 <div className="project-card-image-frame">
-                  <Image
-                    src="/proyecto-01.jpg"
-                    alt="Terraza en Barranco"
-                    width={640}
-                    height={480}
-                  />
+                  {/* Rutas de imagen de ejemplo */}
+                  <Image src="/proyecto-01.jpg" alt="Terraza en Barranco" width={640} height={480} />
                 </div>
                 <div className="project-card-meta">
                   <span className="project-card-location">Barranco, Lima</span>
@@ -110,12 +109,7 @@ export default function HomePage() {
 
               <article className="project-card">
                 <div className="project-card-image-frame">
-                  <Image
-                    src="/proyecto-02.jpg"
-                    alt="Patio en La Molina"
-                    width={640}
-                    height={480}
-                  />
+                  <Image src="/proyecto-02.jpg" alt="Patio en La Molina" width={640} height={480} />
                 </div>
                 <div className="project-card-meta">
                   <span className="project-card-location">La Molina, Lima</span>
@@ -130,12 +124,7 @@ export default function HomePage() {
 
               <article className="project-card">
                 <div className="project-card-image-frame">
-                  <Image
-                    src="/proyecto-03.jpg"
-                    alt="Terraza corporativa"
-                    width={640}
-                    height={480}
-                  />
+                  <Image src="/proyecto-03.jpg" alt="Terraza corporativa" width={640} height={480} />
                 </div>
                 <div className="project-card-meta">
                   <span className="project-card-location">San Isidro</span>
@@ -151,7 +140,6 @@ export default function HomePage() {
           </section>
 
           {/* ============ COTIZA (SHOWCASE SCROLL) ============ */}
-          {/* Este componente ya incluye <section id="cotiza" ... /> */}
           <ScrollShowcase />
 
           {/* ============ PROCESO ============ */}
