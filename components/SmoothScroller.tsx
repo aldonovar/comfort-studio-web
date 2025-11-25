@@ -6,20 +6,22 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export default function SmoothScroller() {
   useEffect(() => {
-    // Instalamos Lenis (la versión correcta)
+    // Instalamos Lenis
     const lenis = new Lenis({
       duration: 1.5,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
-      smoothWheel: true, // Propiedad correcta para smooth scroll
+      smoothWheel: true,
     });
 
-    // Registramos ScrollTrigger si es necesario
-    if (typeof window !== 'undefined' && !ScrollTrigger.core) {
+    // CORRECCIÓN CLAVE: Quitamos la verificación '.core' que fallaba el TypeCheck.
+    // Dejamos la llamada simple, que es segura y funcional.
+    if (typeof window !== 'undefined') {
         gsap.registerPlugin(ScrollTrigger);
     }
     
+    // Sincronizar Lenis con ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
     gsap.ticker.add((time) => {
@@ -30,6 +32,7 @@ export default function SmoothScroller() {
 
     return () => {
       lenis.destroy();
+      // Nota: No matamos ScrollTrigger aquí ya que puede ser usado por otros componentes.
     };
   }, []);
 
